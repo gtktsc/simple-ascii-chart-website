@@ -58,13 +58,15 @@ const Home = () => {
             runChart(event, () => {
               const { target } = event;
               setSize({
-                width: Number((target as HTMLSpanElement)?.textContent || 1),
+                width: Number(
+                  (target as HTMLSpanElement)?.textContent || undefined
+                ),
                 height: size.height,
               });
             });
           }}
         >
-          {size.width}
+          {size.width || "-"}
         </span>
         <span>{`, `}</span>
         <span
@@ -73,13 +75,15 @@ const Home = () => {
             runChart(event, () => {
               const { target } = event;
               setSize({
-                height: Number((target as HTMLSpanElement)?.textContent || 1),
+                height: Number(
+                  (target as HTMLSpanElement)?.textContent || undefined
+                ),
                 width: size.width,
               });
             });
           }}
         >
-          {size.height}
+          {size.height || "-"}
         </span>
         <span>{`)`}</span>
       </pre>
