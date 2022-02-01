@@ -6,16 +6,15 @@ const Home = () => {
   const [size, setSize] = useState({ width: 20, height: 20 });
   const [data, setData] = useState([
     [1, 1],
-    [2, 4],
+    [2, -20],
     [3, 4],
     [4, 1],
     [5, 1],
-    [6, 1],
-    [10, 20],
-    [14, 10],
+    [6, 10],
   ] as Array<[x: number, y: number]>);
 
-  const chart = (!error && plot(data, size.width, size.height)) || "";
+  const chart =
+    (!error && plot(data, { width: size.width, height: size.height })) || "";
 
   const runChart = (
     event: KeyboardEvent<HTMLSpanElement>,
@@ -51,7 +50,7 @@ const Home = () => {
         >
           {JSON.stringify(data)}
         </span>
-        <span>{`, `}</span>
+        <span>{`, { width: `}</span>
         <span
           contentEditable
           onKeyDown={(event) => {
@@ -68,7 +67,7 @@ const Home = () => {
         >
           {size.width || "-"}
         </span>
-        <span>{`, `}</span>
+        <span>{`, height: `}</span>
         <span
           contentEditable
           onKeyDown={(event) => {
@@ -85,7 +84,7 @@ const Home = () => {
         >
           {size.height || "-"}
         </span>
-        <span>{`)`}</span>
+        <span>{`})`}</span>
       </pre>
       <pre
         onClick={() => {
