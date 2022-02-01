@@ -5,13 +5,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy": "yarn add simple-ascii-chart --upgrade && git add . && git commit -m'ascii-website: Bump version' && git push -u origin main"
   },
   "dependencies": {
     "next": "12.0.9",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "simple-ascii-chart": "^1.0.10"
+    "simple-ascii-chart": "^1.0.11"
   },
   "devDependencies": {
     "@types/node": "17.0.13",
