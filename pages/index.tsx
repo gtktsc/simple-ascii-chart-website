@@ -3,7 +3,7 @@ import plot from "simple-ascii-chart";
 
 const Home = () => {
   const [error, setError] = useState("");
-  const [size, setSize] = useState({ width: 20, height: 20 });
+  const [settings, setSettings] = useState("" as string | void);
   const [data, setData] = useState([
     [1, 1],
     [2, -20],
@@ -13,8 +13,17 @@ const Home = () => {
     [6, 10],
   ] as Array<[x: number, y: number]>);
 
-  const chart =
-    (!error && plot(data, { width: size.width, height: size.height })) || "";
+  // lord please forgive me
+  const getSettings = (obj: string) => {
+    try {
+      return Function('"use strict";return (' + obj + ")")();
+    } catch ({ message }: unknown) {
+      setError(message as string);
+    }
+  };
+
+  const executed = (settings && getSettings(settings)) || "";
+  const chart = (!error && plot(data, executed)) || "";
 
   const runChart = (
     event: KeyboardEvent<HTMLSpanElement>,
@@ -50,39 +59,19 @@ const Home = () => {
         >
           {JSON.stringify(data)}
         </span>
-        <span>{`, { width: `}</span>
+        <span>{`, `}</span>
         <span
           contentEditable
           onKeyDown={(event) => {
             runChart(event, () => {
               const { target } = event;
-              setSize({
-                width: Number(
-                  (target as HTMLSpanElement)?.textContent || undefined
-                ),
-                height: size.height,
-              });
+              setSettings(
+                (target as HTMLSpanElement)?.textContent || undefined
+              );
             });
           }}
         >
-          {size.width || "-"}
-        </span>
-        <span>{`, height: `}</span>
-        <span
-          contentEditable
-          onKeyDown={(event) => {
-            runChart(event, () => {
-              const { target } = event;
-              setSize({
-                height: Number(
-                  (target as HTMLSpanElement)?.textContent || undefined
-                ),
-                width: size.width,
-              });
-            });
-          }}
-        >
-          {size.height || "-"}
+          {settings?.toString() || "undefined"}
         </span>
         <span>{`})`}</span>
       </pre>
