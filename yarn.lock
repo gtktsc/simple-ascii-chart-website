@@ -1479,10 +1479,10 @@ side-channel@^1.0.4:
     get-intrinsic "^1.0.2"
     object-inspect "^1.9.0"
 
-simple-ascii-chart@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/simple-ascii-chart/-/simple-ascii-chart-2.1.1.tgz#a7ca640cb677db14896975f920b9846121b9ffdd"
-  integrity sha512-z6yDcuMLtau1hpEknXehCs+HkO2C3nh3ttgO1gM9ugKT2z/qRpnmJCWbe1NhvP6Y8ac5aJl62Q5draybZyKUUA==
+simple-ascii-chart@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/simple-ascii-chart/-/simple-ascii-chart-2.1.2.tgz#5dee59a5f4dccdc896f6ec9ff9a0d57fd1e242c8"
+  integrity sha512-TcTt6/6P45K7s2+18ZD86+D0aLPiMJ+NorQGIEivFjUG5mBDXj4wcHqvUQn7nKoQ2M8F6N+D/B/ZGSCU+eqOow==
 
 slash@^3.0.0:
   version "3.0.0"
