@@ -17,7 +17,7 @@ const Home = () => {
   const getSettings = (obj: string) => {
     try {
       return Function('"use strict";return (' + obj + ")")();
-    } catch ({ message }: unknown) {
+    } catch ({ message }: any) {
       setError(message as string);
     }
   };
@@ -35,7 +35,7 @@ const Home = () => {
         (event.target as HTMLSpanElement)?.blur();
         event.preventDefault();
         setError("");
-      } catch ({ message }: unknown) {
+      } catch ({ message }: any) {
         setError(message as string);
       }
     }
@@ -43,6 +43,7 @@ const Home = () => {
 
   return (
     <>
+      <span>Plot settings:</span>
       <pre>
         <span>{`plot(`}</span>
         <span
@@ -71,11 +72,14 @@ const Home = () => {
             });
           }}
         >
-          {settings?.toString() || "undefined"}
+          {settings?.toString() || "{}"}
         </span>
         <span>{`})`}</span>
       </pre>
+      <span>Output:</span>
+
       <pre
+        className="copyable"
         onClick={() => {
           navigator.clipboard.writeText(chart);
         }}
