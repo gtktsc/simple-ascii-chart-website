@@ -12,7 +12,7 @@ export default function handler(
     const parsedSettings =
       (settings && JSON.parse(settings as string)) || undefined;
 
-    res.status(200).json(plot(parsedInput, parsedSettings));
+    res.status(200).send(plot(parsedInput, parsedSettings));
   } catch (error) {
     res.status(400).send("Unable to parse data");
   }
