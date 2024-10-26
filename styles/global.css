@@ -1,10 +1,143 @@
-pre {
-    padding:10px;
-    border-radius: 10px;
-    background-color: #f9f9f9;
+/* Apply monospaced font to all elements */
+* {
+  font-family: "Courier New", Courier, monospace; /* Monospaced font */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.copyable:hover{
-    cursor: pointer;
-    background-color: #e8e6e6;
+/* Basic global styles */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
 }
+html {
+  overflow-y: scroll;
+}
+
+/* Styling for the CopyablePlot component */
+.copyable-plot-wrapper {
+  position: relative;
+  padding: 0.625rem 0; /* 10px */
+}
+
+/* Style for the plot container */
+.copyable-plot {
+  background-color: #f5f5f5;
+  border: 0.0625rem solid #ccc; /* 1px */
+  padding: 0.625rem; /* 10px */
+  font-family: "Courier New", Courier, monospace;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  cursor: pointer;
+  margin-bottom: 1.25rem; /* 20px */
+}
+
+/* Style for the toast notification */
+.toast-notification {
+  position: fixed;
+  bottom: 1.25rem; /* 20px */
+  right: 1.25rem; /* 20px */
+  background-color: #333;
+  color: #fff;
+  padding: 0.625rem 1.25rem; /* 10px 20px */
+  border-radius: 0.3125rem; /* 5px */
+  font-size: 0.875rem; /* 14px */
+  opacity: 0.9;
+  z-index: 1000;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.toast-notification:hover {
+  opacity: 1;
+}
+
+/* Heading styles with spacing */
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 1.25rem; /* 20px */
+  margin-bottom: 0.625rem; /* 10px */
+  line-height: 1.2;
+  font-weight: bold;
+  font-family: inherit; /* Inherit the monospaced font */
+}
+
+/* Navbar styling */
+.navbar {
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  padding: 0.9375rem 1.25rem; /* 15px 20px */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: none;
+  transition: box-shadow 0.3s ease-in-out;
+  z-index: 1000;
+  font-family: inherit; /* Inherit monospaced font */
+}
+
+.navbar.scrolled {
+  box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1); /* 4px 6px */
+}
+
+/* Navbar links styling */
+.navbar-links a {
+  text-decoration: none;
+  margin: 0 0.9375rem; /* 15px */
+  color: #0070f3;
+  font-weight: 600;
+  font-family: inherit; /* Monospaced font for links */
+  transition: color 0.3s ease, background-color 0.3s ease;
+  padding: 0.5rem 0.75rem; /* 8px 12px */
+  border-radius: 0.25rem; /* 4px */
+}
+
+.navbar-links a:hover {
+  background-color: rgba(0, 112, 243, 0.1);
+  color: #005bb5;
+}
+
+a {
+  color: #0070f3;
+  text-decoration: none;
+  font-family: inherit;
+}
+
+a:hover {
+  color: #005bb5;
+}
+
+/* Spacing for the main content */
+main {
+  padding: 1.25rem; /* 20px */
+  max-width: 62.5rem; /* 1000px */
+  margin: 0 auto;
+  font-size: 1rem; /* 16px */
+  font-family: inherit;
+}
+
+/* Ensure the layout doesn't shift due to scrollbar */
+body {
+  padding-right: calc(100vw - 100%);
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 48rem) { /* 768px */
+  .navbar-links {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .navbar-links a {
+    margin: 0.625rem 0; /* 10px */
+    padding: 0.625rem; /* 10px */
+  }
+
+  main {
+    padding: 0.9375rem; /* 15px */
+  }
+}
+
+
