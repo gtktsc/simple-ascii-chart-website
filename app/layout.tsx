@@ -1,5 +1,21 @@
+import type { Metadata } from "next";
 import Link from "next/link";
-import "../styles/global.css"; // Add necessary CSS here or in the file
+import "../styles/global.css";
+
+// Define static metadata
+export const metadata: Metadata = {
+  title: "simple-ascii-chart",
+  description:
+    "Simple ASCII Chart is a lightweight and flexible TypeScript library designed to create customizable ASCII charts directly in the terminal.",
+  keywords: [
+    "chart",
+    "ascii",
+    "javascript",
+    "typescript",
+    "plot",
+    "ascii-chart",
+  ],
+};
 
 export default function RootLayout({
   children,
