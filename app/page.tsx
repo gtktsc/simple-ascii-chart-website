@@ -16,8 +16,8 @@ export default function Home() {
         <Image
           src="/simple-asci-chart.gif"
           alt="Simple ASCII Chart"
-          width={928}
-          height={441}
+          width={742}
+          height={352}
         />
       </div>
       <CodeBlock javascript>
