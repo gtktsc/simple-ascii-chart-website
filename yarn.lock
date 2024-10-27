@@ -2082,10 +2082,10 @@ side-channel@^1.0.4, side-channel@^1.0.6:
     get-intrinsic "^1.2.4"
     object-inspect "^1.13.1"
 
-simple-ascii-chart@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/simple-ascii-chart/-/simple-ascii-chart-4.1.1.tgz#5a7074a6c7f8b13d3bb518f1af73880f8adf5042"
-  integrity sha512-uYJUYCpeyFG9chvLgb/MjJukB1BIJxI0hSe7DKF+5bw8iQ4okYaL0r82Mu+lFkh1CTkof2sl34P0nGRUPCfutg==
+simple-ascii-chart@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/simple-ascii-chart/-/simple-ascii-chart-4.2.0.tgz#390cfe00ec7bf8632dcd9140810999600adccfc3"
+  integrity sha512-xm/1W5Y2Ir+r1vgfYp3gAf8FjK3hYUveSowEJdQQdOkC4Uq1F8KexXXnAYXz5qrghhxx7lg8vuLPPGu1IJzxIA==
 
 simple-swizzle@^0.2.2:
   version "0.2.2"

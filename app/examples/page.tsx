@@ -131,6 +131,54 @@ export default function Examples() {
       },
     },
     {
+      title: "Bar chart",
+      input: [
+        [
+          [0, 1],
+          [1, 2],
+          [2, 4],
+        ],
+      ],
+      options: {
+        width: 30,
+        barChart: true,
+        height: 10,
+      },
+    },
+    {
+      title: "Bar chart with negative values and axis center",
+      input: [
+        [
+          [0, 1],
+          [1, 2],
+          [2, 4],
+          [3, -4],
+          [4, -2],
+        ],
+      ],
+      options: {
+        width: 30,
+        barChart: true,
+        height: 10,
+        axisCenter: [0, 0],
+      },
+    },
+    {
+      title: "Horizontal bar chart",
+      input: [
+        [
+          [0, 1],
+          [1, 2],
+          [2, 4],
+        ],
+      ],
+      options: {
+        width: 30,
+        horizontalBarChart: true,
+        height: 10,
+      },
+    },
+    {
       title: "Custom Formatter",
       input: [
         [0, 1],
