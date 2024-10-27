@@ -93,6 +93,36 @@ export default function Examples() {
       options: { width: 30, height: 10, axisCenter: [0, 0] },
     },
     {
+      title: "Bar Chart",
+      input: [
+        [-3, -1],
+        [-2, 0],
+        [-1, 1],
+        [0, 2],
+        [1, 3],
+        [2, 5],
+        [3, -7],
+      ],
+      options: { barChart: true, width: 30, height: 20, axisCenter: [0, 0] },
+    },
+    {
+      title: "Horizontal Bar Chart",
+      input: [
+        [-3, -1],
+        [-2, 0],
+        [-1, 1],
+        [0, 2],
+        [1, 3],
+        [2, 5],
+      ],
+      options: {
+        horizontalBarChart: true,
+        width: 30,
+        height: 20,
+        axisCenter: [0, 0],
+      },
+    },
+    {
       title: "With Title and Labels",
       input: [
         [0, 1],
@@ -210,16 +240,18 @@ export default function Examples() {
             <div>
               <div>
                 <strong>Input:</strong>
-                <CodeBlock>{formatCompactInput(example.input)}</CodeBlock>
+                <CodeBlock javascript>
+                  {formatCompactInput(example.input)}
+                </CodeBlock>
               </div>
               <div>
                 <strong>Options:</strong>
-                <CodeBlock>
+                <CodeBlock javascript>
                   {JSON.stringify(example.options, null, 0)}
                 </CodeBlock>
               </div>
             </div>
-            <CodeBlock>{result}</CodeBlock>
+            <CodeBlock bash>{result}</CodeBlock>
             <Link
               href={`/playground?input=${encodeURIComponent(
                 JSON.stringify(example.input)

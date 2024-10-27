@@ -36,6 +36,20 @@ const examples = [
     settings: { showTickLabel: true, width: 60 } as Settings,
   },
   {
+    id: "bar-chart",
+    title: "Bar chart",
+    description: "Draw bar chart.",
+    possibleValues: "Boolean (true or false).",
+    settings: { barChart: true, width: 60 } as Settings,
+  },
+  {
+    id: "horizontal-bar-chart",
+    title: "Horizontal Bar chart",
+    description: "Draw horizontal bar chart.",
+    possibleValues: "Boolean (true or false).",
+    settings: { horizontalBarChart: true, width: 60 } as Settings,
+  },
+  {
     id: "hide-x-axis",
     title: "Hide X-Axis",
     description: "Hides the x-axis from the graph.",
@@ -178,7 +192,7 @@ export default function Documentation() {
           <p>
             <strong>Possible Values:</strong> {example.possibleValues}
           </p>
-          <CodeBlock>{chart(input, example.settings)}</CodeBlock>
+          <CodeBlock bash>{chart(input, example.settings)}</CodeBlock>
         </div>
       ))}
     </div>

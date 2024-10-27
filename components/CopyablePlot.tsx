@@ -1,20 +1,35 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import hljs from "highlight.js";
+import "highlight.js/styles/github.css"; // You can choose any Highlight.js theme
 
 type CodeBlockProps = {
   children: React.ReactNode;
+  javascript?: boolean;
+  bash?: boolean;
 };
 
-const CodeBlock: React.FC<CodeBlockProps> = ({ children }) => {
+const CodeBlock: React.FC<CodeBlockProps> = ({
+  children,
+  javascript = false,
+  bash = false,
+}) => {
   const [copied, setCopied] = useState(false);
+  const codeRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if ((javascript || bash) && codeRef.current) {
+      hljs.highlightElement(codeRef.current); // Apply Highlight.js
+    }
+  }, [javascript, bash, children]);
 
   const handleCopy = () => {
-    if (typeof children !== "string") {
-      return;
+    if (typeof children === "string") {
+      navigator.clipboard.writeText(children); // Copy directly if it's a string
+    } else if (codeRef.current) {
+      navigator.clipboard.writeText(codeRef.current.innerText); // Otherwise, get the text content
     }
-
-    navigator.clipboard.writeText(children);
     setCopied(true);
 
     // Automatically hide the copied message after 2 seconds
@@ -22,8 +37,14 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ children }) => {
   };
 
   const dismissAlert = () => {
-    setCopied(false); // Dismiss the alert manually
+    setCopied(false);
   };
+
+  const languageClass = javascript
+    ? "language-javascript"
+    : bash
+    ? "language-bash"
+    : "";
 
   return (
     <div className="copyable-plot-wrapper">
@@ -31,9 +52,11 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ children }) => {
         className="copyable-plot"
         onClick={handleCopy}
         role="button"
-        aria-label="Click to copy the plot"
+        aria-label="Click to copy the code"
       >
-        <code>{children}</code>
+        <code ref={codeRef} className={languageClass}>
+          {children}
+        </code>
       </pre>
 
       {copied && (
