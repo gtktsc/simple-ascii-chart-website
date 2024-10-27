@@ -16,11 +16,11 @@ export default function Usage() {
         install it via npm or yarn:
       </p>
 
-      <CodeBlock>npm install simple-ascii-chart</CodeBlock>
-      <CodeBlock>yarn add simple-ascii-chart</CodeBlock>
+      <CodeBlock bash>npm install simple-ascii-chart</CodeBlock>
+      <CodeBlock bash>yarn add simple-ascii-chart</CodeBlock>
 
       <p>Once installed, import and use it in your code like this:</p>
-      <CodeBlock>{`import plot from 'simple-ascii-chart';
+      <CodeBlock javascript>{`import plot from 'simple-ascii-chart';
 
 const input = [
   [1, 1],
@@ -46,10 +46,12 @@ console.log(plot(input, settings));
         .
       </p>
       <p>To install the CLI globally, run:</p>
-      <CodeBlock>npm install -g simple-ascii-chart-cli</CodeBlock>
+      <CodeBlock bash>npm install -g simple-ascii-chart-cli</CodeBlock>
 
       <p>Once installed, you can generate charts directly in your terminal:</p>
-      <CodeBlock>{`simple-ascii-chart "[[1, 1], [2, 4], [3, 8]]" --width 20 --height 10`}</CodeBlock>
+      <CodeBlock
+        bash
+      >{`simple-ascii-chart "[[1, 1], [2, 4], [3, 8]]" --width 20 --height 10`}</CodeBlock>
 
       <p>
         This command will output the chart directly in your terminal. For more
@@ -77,13 +79,13 @@ console.log(plot(input, settings));
         </li>
       </ul>
 
-      <CodeBlock>{`curl -G https://simple-ascii-chart.vercel.app/api \\
+      <CodeBlock bash>{`curl -G https://simple-ascii-chart.vercel.app/api \\
   --data-urlencode 'input=[[1,2],[2,3],[3,4]]' \\
   --data-urlencode 'settings={"width":50,"height":10}'
 `}</CodeBlock>
 
       <p>Example API call response:</p>
-      <CodeBlock>{`  ▲
+      <CodeBlock bash>{`  ▲
  4┤   ┏━━
   │   ┃
  2┤ ┏━┛

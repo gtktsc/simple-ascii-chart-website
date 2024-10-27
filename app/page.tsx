@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+import CodeBlock from "../components/CopyablePlot";
 
 export default function Home() {
   return (
@@ -10,6 +12,53 @@ export default function Home() {
         and customize appearance with settings like colors, formatting, and axis
         labels.
       </p>
+      <div className="chart-gif-wrapper">
+        <Image
+          src="/simple-asci-chart.gif"
+          alt="Simple ASCII Chart"
+          width={742}
+          height={352}
+        />
+      </div>
+      <CodeBlock javascript>
+        {`let step = 0;
+const interval = 0.1;
+const maxPoints = 20;
+const sinPoints: Point[] = [];
+const cosPoints: Point[] = [];
+
+setInterval(() => {
+  console.clear();
+
+  sinPoints.push([step, Math.sin(step)]);
+  cosPoints.push([step, Math.cos(step)]);
+
+  if (sinPoints.length > maxPoints) sinPoints.shift();
+  if (cosPoints.length > maxPoints) cosPoints.shift();
+
+  console.log(
+    plot([sinPoints, cosPoints], {
+      showTickLabel: true,
+      color: ['ansiRed', 'ansiBlue'],
+      width: 120,
+      height: 16,
+      yRange: [-1, 1],
+      xLabel: 'Step (π)',
+      yLabel: 'Amplitude',
+      legend: { position: 'bottom', series: ['Sine', 'Cosine'] },
+      axisCenter: [undefined, 0],
+      formatter: (x, { axis }) => {
+        if (axis === 'y') return x;
+        return \`\${(x / Math.PI).toFixed(1)}π\`;
+      },
+    }),
+  );
+
+  step += interval;
+}, 200);`}
+        `
+      </CodeBlock>
+
       <p>
         With Simple ASCII Chart, you can generate insightful, minimalistic
         charts that work well in terminal environments, making it ideal for

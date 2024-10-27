@@ -131,7 +131,7 @@ export default function EditablePlot({
 
       <div>
         <button onClick={runCode}>Run Code and Plot</button>
-        <CodeBlock>{result}</CodeBlock>
+        <CodeBlock bash>{result}</CodeBlock>
       </div>
     </>
   );
