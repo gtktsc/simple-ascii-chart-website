@@ -13,6 +13,11 @@
   width: 100%;
   padding: 1rem 0;
 }
+.chart-gif-wrapper img{
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+}
 
 /* Basic global styles */
 body {
@@ -35,6 +40,16 @@ html {
   cursor: pointer;
 }
 
+.editor-wrapper {
+  gap: 1rem;
+}
+
+.editor-wrapper section {
+  border: 0.0625rem solid #ccc; /* 1px */
+  padding:1rem;
+  margin-bottom: 1rem;
+}
+
 /* Style for the toast notification */
 .toast-notification {
   position: fixed;
@@ -45,7 +60,6 @@ html {
   padding: 0.625rem 1.25rem; /* 10px 20px */
   border-radius: 0.3125rem; /* 5px */
   font-size: 0.875rem; /* 14px */
-  opacity: 0.9;
   z-index: 1000;
   cursor: pointer;
   transition: opacity 0.3s ease;
@@ -112,9 +126,13 @@ body {
 }
 
 /* Responsive design for smaller screens */
-@media (max-width: 48rem) {
-  /* 768px */
+@media (max-width: 900px) {
+  .navbar{
+    position: relative;
+  }
+
   .navbar-links {
+    display:flex;
     flex-direction: column;
     align-items: center;
   }
@@ -122,9 +140,5 @@ body {
   .navbar-links a {
     margin: 0.625rem 0; /* 10px */
     padding: 0.625rem; /* 10px */
-  }
-
-  main {
-    padding: 0.9375rem; /* 15px */
   }
 }

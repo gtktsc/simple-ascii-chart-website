@@ -94,8 +94,11 @@ export default function EditablePlot({
   const editorOptions = {
     minimap: { enabled: false },
     fontSize: 14,
-    lineNumbers: "on" as const,
+    lineNumbers: "off" as const,
     automaticLayout: true,
+    lineDecorationsWidth: 0,
+    glyphMargin: false,
+    folding: false,
     rulers: [], // No rulers
     overviewRulerLanes: 0, // Disable overview ruler
     wordWrap: "on" as const, // Enable word wrapping
@@ -106,7 +109,7 @@ export default function EditablePlot({
 
   return (
     <>
-      <div>
+      <div className="editor-wrapper">
         <Editor
           height="200px"
           defaultLanguage="javascript"
