@@ -15,7 +15,7 @@
     "next": "15.0.1",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "simple-ascii-chart": "^4.2.0"
+    "simple-ascii-chart": "^5.0.0"
   },
   "devDependencies": {
     "@types/node": "22.8.1",
