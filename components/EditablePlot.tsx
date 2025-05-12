@@ -14,9 +14,6 @@ type EditablePlotProps = {
   options: Settings;
 };
 
-export default function EditablePlot({
-  input,
-  options,
-}: EditablePlotProps): JSX.Element {
+export default function EditablePlot({ input, options }: EditablePlotProps) {
   return <DynamicComponentWithNoSSR input={input} options={options} />;
 }

@@ -11,10 +11,7 @@ type EditablePlotProps = {
   options: Settings;
 };
 
-export default function EditablePlot({
-  input,
-  options,
-}: EditablePlotProps): JSX.Element {
+export default function EditablePlot({ input, options }: EditablePlotProps) {
   const leftEditorRef = useRef<any>(null);
   const rightEditorRef = useRef<any>(null);
 
