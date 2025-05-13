@@ -36,18 +36,11 @@ const examples = [
     settings: { showTickLabel: true, width: 60 } as Settings,
   },
   {
-    id: "bar-chart",
-    title: "Bar chart",
-    description: "Draw bar chart.",
-    possibleValues: "Boolean (true or false).",
-    settings: { barChart: true, width: 60 } as Settings,
-  },
-  {
-    id: "horizontal-bar-chart",
-    title: "Horizontal Bar chart",
-    description: "Draw horizontal bar chart.",
-    possibleValues: "Boolean (true or false).",
-    settings: { horizontalBarChart: true, width: 60 } as Settings,
+    id: "mode",
+    title: "Mode",
+    description: "Select mode for drawing the graph - lines, bars, etc.",
+    possibleValues: "line | bar | horizontalBar | point",
+    settings: { mode: "bar", width: 60 } as Settings,
   },
   {
     id: "hide-x-axis",

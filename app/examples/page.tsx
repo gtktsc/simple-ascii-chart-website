@@ -122,7 +122,7 @@ export default function Examples() {
         [2, 5],
         [3, -7],
       ],
-      options: { barChart: true, width: 30, height: 20, axisCenter: [0, 0] },
+      options: { mode: "bar", width: 30, height: 20, axisCenter: [0, 0] },
     },
     {
       title: "Horizontal Bar Chart",
@@ -135,7 +135,7 @@ export default function Examples() {
         [2, 5],
       ],
       options: {
-        horizontalBarChart: true,
+        mode: "horizontalBar",
         width: 30,
         height: 20,
         axisCenter: [0, 0],
@@ -222,7 +222,7 @@ export default function Examples() {
       ],
       options: {
         width: 30,
-        barChart: true,
+        mode: "bar",
         height: 10,
       },
     },
@@ -239,7 +239,7 @@ export default function Examples() {
       ],
       options: {
         width: 30,
-        barChart: true,
+        mode: "bar",
         height: 10,
         axisCenter: [0, 0],
       },
@@ -255,7 +255,7 @@ export default function Examples() {
       ],
       options: {
         width: 30,
-        horizontalBarChart: true,
+        mode: "horizontalBar",
         height: 10,
       },
     },
