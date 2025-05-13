@@ -80,6 +80,25 @@ export default function Examples() {
       },
     },
     {
+      title: "With points",
+      input: [
+        [1, 2],
+        [2, 5],
+        [3, 8],
+        [4, 3],
+        [5, 7],
+        [6, 1],
+      ],
+      options: {
+        width: 30,
+        height: 10,
+        points: [
+          { y: 5, x: 2 },
+          { x: 3, y: 2 },
+        ],
+      },
+    },
+    {
       title: "With Custom Axis Center",
       input: [
         [-3, -1],
@@ -160,6 +179,38 @@ export default function Examples() {
         legend: { position: "bottom", series: ["Series 1", "Series 2"] },
       },
     },
+    {
+      title: "With complex Legend",
+      input: [
+        [
+          [0, 1],
+          [1, 2],
+          [2, 4],
+        ],
+        [
+          [0, 1],
+          [1, 3],
+          [2, 6],
+        ],
+      ],
+      options: {
+        title: "Legend",
+        width: 30,
+        points: [
+          { x: 1, y: 2 },
+          { x: 2, y: 4 },
+        ],
+        thresholds: [{ x: 1, y: 2 }],
+        height: 10,
+        legend: {
+          position: "right",
+          series: ["S1", "S2"],
+          thresholds: ["T1"],
+          points: ["P1", "P2"],
+        },
+      },
+    },
+
     {
       title: "Bar chart",
       input: [

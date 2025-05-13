@@ -99,6 +99,17 @@ const examples = [
     } as Settings,
   },
   {
+    id: "points",
+    title: "Points",
+    description: "Adds points lines at specific x, y coordinates.",
+    possibleValues:
+      'An array of points, each x, y coordinates and a color, e.g., [{ x: 3, y:6, color: "ansiRed" }].',
+    settings: {
+      width: 60,
+      points: [{ x: 3, y: 15 }],
+    } as Settings,
+  },
+  {
     id: "fill-area",
     title: "Fill Area",
     description: "Fills the area under the lines.",
