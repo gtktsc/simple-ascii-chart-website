@@ -2967,10 +2967,10 @@ side-channel@^1.1.0:
     side-channel-map "^1.0.1"
     side-channel-weakmap "^1.0.2"
 
-simple-ascii-chart@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/simple-ascii-chart/-/simple-ascii-chart-5.0.0.tgz#4186762abe608db9385774f0885717075a084851"
-  integrity sha512-AirrqLPiPB5tGRgiyZoriQuJzlAFZx82AdkknOEQSlq6EIaJ5FIm9uaY93b6lrpVxWXlWjDAIQgRShfgJSXgkw==
+simple-ascii-chart@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/simple-ascii-chart/-/simple-ascii-chart-5.1.0.tgz#496a2b7a8a2f146a7a3e9309e86602a8c91b9609"
+  integrity sha512-4es8skTegTdnA6px2s97Zkv0k/Ra3+oaEHHx27wnt+HhDUu83Hl7YfiRZUTxE3XF+ClWgnpO6FYsw8QejKX5SQ==
 
 simple-swizzle@^0.2.2:
   version "0.2.2"
