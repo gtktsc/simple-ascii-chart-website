@@ -77,15 +77,9 @@ export default function EditablePlot({ input, options }: EditablePlotProps) {
 
   // Initial call to plot with provided props
   useEffect(() => {
-    try {
-      formatEditor(leftEditorRef.current); // Format input on initial load
-      formatEditor(rightEditorRef.current); // Format options on initial load
-      plot(input, options); // Initial plot
-    } catch (error) {
-      if (error instanceof Error) {
-        setResult(`Error: ${error.message}`);
-      }
-    }
+    formatEditor(leftEditorRef.current); // Format input on initial load
+    formatEditor(rightEditorRef.current); // Format options on initial load
+    plot(input, options); // Initial plot
   }, [input, options]);
 
   const editorOptions = {

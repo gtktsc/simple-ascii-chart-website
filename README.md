@@ -1,93 +1,107 @@
-
 ## Simple ASCII Chart Website
 
-### Overview
-The **Simple ASCII Chart** website is a versatile tool that allows users to generate and visualize customizable ASCII-based charts. It provides a few different ways to interact with the charting system: through a web-based UI, an interactive playground, or by hitting an API directly. The website is also integrated with a **CLI** to generate charts from your terminal.
+Website and docs for [`simple-ascii-chart`](https://www.npmjs.com/package/simple-ascii-chart).
 
-### Accessing the Website
+- Live site: [https://simple-ascii-chart.vercel.app/](https://simple-ascii-chart.vercel.app/)
+- Library repo: [https://github.com/gtktsc/ascii-chart](https://github.com/gtktsc/ascii-chart)
+- CLI repo: [https://github.com/gtktsc/simple-ascii-chart-cli](https://github.com/gtktsc/simple-ascii-chart-cli)
 
-You can access the live website directly via:
-```
-https://simple-ascii-chart.vercel.app/
-```
+### Local development
 
-### API Usage
-
-To generate charts via the API, send a GET request to the following endpoint with your `input` and optional `settings` query parameters:
-
-Example API call:
-```
-https://simple-ascii-chart.vercel.app/api?input=[[1,2],[2,3],[3,4]]&settings={%22width%22:50}
+```bash
+yarn install
+yarn docs:generate
+yarn dev
 ```
 
-### Playground
+### Quality checks
 
-The website offers an interactive **Playground** that allows users to create charts by adjusting input data and configuration settings in real time. Visit the playground to experiment with different chart parameters:
-```
-https://simple-ascii-chart.vercel.app/playground
-```
-
-### CLI Usage
-
-To generate ASCII charts from the command line, you can use the **Simple ASCII Chart CLI**. Install it globally with the following command:
-
-```
-npm install -g simple-ascii-chart-cli
+```bash
+yarn docs:check
+yarn typecheck
+yarn lint
+yarn test
+yarn build
 ```
 
-Once installed, you can generate charts directly in your terminal by providing input data and chart settings. For example:
+### Documentation generation
 
-```
-simple-ascii-chart "[[1, 2], [2, 4], [3, 8]]" --width 20 --height 10
-```
+`/documentation` is generated from the installed `simple-ascii-chart` package metadata:
 
-This command will output the ASCII chart directly in your terminal.
+- `README.md` settings reference table
+- `dist/types/index.d.ts` `Settings` type
 
-### Library Usage
+Commands:
 
-To use the **simple-ascii-chart** library in your project, install it via npm or yarn:
-
-```
-npm install simple-ascii-chart
+```bash
+yarn docs:generate   # regenerate app/generated/settings-docs.ts
+yarn docs:check      # fail if generated docs are stale
 ```
 
-or 
+### API
 
-```
-yarn add simple-ascii-chart
-```
+Endpoint: `https://simple-ascii-chart.vercel.app/api`
 
-Once installed, you can use it in your code like this:
+#### GET (query params)
 
-```javascript
-import plot from 'simple-ascii-chart';
+- `input` (required): chart coordinates as JSON
+- `settings` (optional): settings as JSON
 
-const input = [
-  [1, 1],
-  [2, 4],
-  [3, 8],
-  [4, 16],
-];
+Example:
 
-const settings = { width: 20, height: 10 };
-console.log(plot(input, settings));
+```bash
+curl -G https://simple-ascii-chart.vercel.app/api \
+  --data-urlencode 'input=[[1,2],[2,3],[3,4]]' \
+  --data-urlencode 'settings={"width":50,"height":10}'
 ```
 
-### Features
+#### POST (JSON body)
 
-- **Interactive Playground**: Modify chart inputs and settings dynamically.
-- **API**: Generate ASCII charts via API requests.
-- **CLI**: Generate ASCII charts from the command line.
-- **Library**: Easily integrate ASCII charts into your codebase.
+Body:
 
-### Contributing
+```json
+{
+  "input": [[1,2],[2,3],[3,4]],
+  "settings": {"width": 50, "height": 10}
+}
+```
 
-Feel free to contribute to the development of the **Simple ASCII Chart** website or its components. You can find the repository for the **CLI** and **Library** below:
+Example:
 
-- **CLI Repository**: [Simple ASCII Chart CLI](https://github.com/gtktsc/simple-ascii-chart-cli)
-- **Library Repository**: [Simple ASCII Chart Library](https://github.com/gtktsc/ascii-chart)
+```bash
+curl -X POST https://simple-ascii-chart.vercel.app/api \
+  -H 'content-type: application/json' \
+  -d '{"input":[[1,2],[2,3],[3,4]],"settings":{"width":50,"height":10}}'
+```
+
+Success response is plain text chart output.
+Error response is JSON:
+
+```json
+{
+  "error": {
+    "code": "ERROR_CODE",
+    "message": "Human-readable message",
+    "details": "Optional details"
+  }
+}
+```
+
+### Release/update workflow
+
+When `simple-ascii-chart` changes:
+
+1. `yarn add simple-ascii-chart --upgrade`
+2. `yarn docs:generate`
+3. `yarn docs:check && yarn typecheck && yarn lint && yarn test && yarn build`
+4. Commit and push
+
+Existing helper script:
+
+```bash
+yarn deploy
+```
 
 ### License
 
-This project is open source and available under the MIT License.
-
+MIT

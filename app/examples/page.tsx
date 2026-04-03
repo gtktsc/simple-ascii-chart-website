@@ -2,32 +2,10 @@ import React from "react";
 import chart, { Coordinates, Settings } from "simple-ascii-chart";
 import CodeBlock from "../../components/CopyablePlot";
 import Link from "next/link";
-
-// Helper function to render input in a compact format
-function formatCompactInput(input: unknown) {
-  if (!input) {
-    return `[]`;
-  }
-
-  if (!Array.isArray(input)) {
-    return `[]`;
-  }
-
-  if (Array.isArray(input[0][0])) {
-    // Handle multi-series input (number[][][])
-    return `[${(input as number[][][])
-      .map(
-        (series) =>
-          `[${series.map((pair) => `[${pair.join(",")}]`).join(", ")}]`
-      )
-      .join(", ")}]`;
-  } else {
-    // Handle single-series input (number[][])
-    return `[${(input as number[][])
-      .map((pair) => `[${pair.join(",")}]`)
-      .join(", ")}]`;
-  }
-}
+import {
+  buildPlaygroundHref,
+  toJavaScriptLiteral,
+} from "../../lib/optionsSerialization.mjs";
 
 export default function Examples() {
   const examples = [
@@ -284,6 +262,7 @@ export default function Examples() {
           example.input as Coordinates,
           example.options as Settings
         );
+        const playgroundHref = buildPlaygroundHref(example.input, example.options);
 
         return (
           <div key={index}>
@@ -292,26 +271,25 @@ export default function Examples() {
               <div>
                 <strong>Input:</strong>
                 <CodeBlock javascript>
-                  {formatCompactInput(example.input)}
+                  {toJavaScriptLiteral(example.input)}
                 </CodeBlock>
               </div>
               <div>
                 <strong>Options:</strong>
                 <CodeBlock javascript>
-                  {JSON.stringify(example.options, null, 0)}
+                  {toJavaScriptLiteral(example.options)}
                 </CodeBlock>
               </div>
             </div>
             <CodeBlock bash>{result}</CodeBlock>
-            <Link
-              href={`/playground?input=${encodeURIComponent(
-                JSON.stringify(example.input)
-              )}&options=${encodeURIComponent(
-                JSON.stringify(example.options)
-              )}`}
-            >
-              Open in Playground
-            </Link>
+            {playgroundHref ? (
+              <Link href={playgroundHref}>Open in Playground</Link>
+            ) : (
+              <p>
+                Not shareable via URL: this example includes values (for example
+                functions) that cannot be safely serialized to query parameters.
+              </p>
+            )}
           </div>
         );
       })}

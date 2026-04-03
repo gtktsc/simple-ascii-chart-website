@@ -67,7 +67,11 @@ console.log(plot(input, settings));
       </p>
 
       <h2>API Usage</h2>
-      <p>The API accepts two query parameters:</p>
+      <p>The API supports both GET query params and POST JSON requests.</p>
+      <p>
+        For GET requests, use the same two query parameters as before:
+        <code> input </code> and optional <code> settings</code>.
+      </p>
       <ul>
         <li>
           <strong>input</strong>: The data for the chart, provided as an array
@@ -79,9 +83,16 @@ console.log(plot(input, settings));
         </li>
       </ul>
 
+      <p>GET example:</p>
       <CodeBlock bash>{`curl -G https://simple-ascii-chart.vercel.app/api \\
   --data-urlencode 'input=[[1,2],[2,3],[3,4]]' \\
   --data-urlencode 'settings={"width":50,"height":10}'
+`}</CodeBlock>
+
+      <p>POST example:</p>
+      <CodeBlock bash>{`curl -X POST https://simple-ascii-chart.vercel.app/api \\
+  -H 'content-type: application/json' \\
+  -d '{"input":[[1,2],[2,3],[3,4]],"settings":{"width":50,"height":10}}'
 `}</CodeBlock>
 
       <p>Example API call response:</p>
@@ -92,6 +103,11 @@ console.log(plot(input, settings));
  1┤━┛
   └┬─┬─┬▶
    1 2 3`}</CodeBlock>
+
+      <p>
+        Error responses return JSON in a standardized shape:
+        <code>{" { error: { code, message, details? } } "}</code>
+      </p>
     </div>
   );
 }

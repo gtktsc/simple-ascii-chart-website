@@ -18,6 +18,7 @@ export default function Home() {
           alt="Simple ASCII Chart"
           width={742}
           height={352}
+          loading="eager"
         />
       </div>
       <CodeBlock javascript>
@@ -56,7 +57,6 @@ setInterval(() => {
 
   step += interval;
 }, 200);`}
-        `
       </CodeBlock>
 
       <p>
@@ -86,6 +86,11 @@ setInterval(() => {
         <Link href="https://github.com/gtktsc/simple-ascii-chart-cli">
           simple-ascii-chart-cli repo
         </Link>
+      </div>
+      <div>
+        Support If this project helps you, consider supporting my open-source
+        work:{" "}
+        <Link href="https://buymeacoffee.com/gtktsc">Buy me a coffee</Link>
       </div>
     </div>
   );
