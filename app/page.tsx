@@ -1,28 +1,17 @@
-import Link from "next/link";
 import Image from "next/image";
-import CodeBlock from "../components/CopyablePlot";
+import {
+  ActionLink,
+  Card,
+  Link as PixxlLink,
+  Prose,
+  PublicPage,
+  Section,
+  SimpleGrid,
+  Stack,
+} from "@pixxl/components";
+import CodeSnippet from "../components/CodeSnippet";
 
-export default function Home() {
-  return (
-    <div>
-      <p>
-        Simple ASCII Chart is a lightweight and flexible TypeScript library
-        designed to create customizable ASCII charts directly in the terminal.
-        It allows you to visualize two-dimensional data, create multiple series,
-        and customize appearance with settings like colors, formatting, and axis
-        labels.
-      </p>
-      <div className="chart-gif-wrapper">
-        <Image
-          src="/simple-asci-chart.gif"
-          alt="Simple ASCII Chart"
-          width={742}
-          height={352}
-          loading="eager"
-        />
-      </div>
-      <CodeBlock javascript>
-        {`let step = 0;
+const demoCode = `let step = 0;
 const interval = 0.1;
 const maxPoints = 20;
 const sinPoints: Point[] = [];
@@ -56,42 +45,103 @@ setInterval(() => {
   );
 
   step += interval;
-}, 200);`}
-      </CodeBlock>
+}, 200);`;
 
-      <p>
-        With Simple ASCII Chart, you can generate insightful, minimalistic
-        charts that work well in terminal environments, making it ideal for
-        command-line tools or logging important data.
-      </p>
-      <div>
-        <div>
-          <Link href="/playground">Explore the interactive playground</Link> or
-          learn more about the{" "}
-          <Link href="/documentation">API and configuration settings</Link>.
+const resources = [
+  {
+    href: "https://www.npmjs.com/package/simple-ascii-chart",
+    label: "Library package",
+    title: "simple-ascii-chart",
+  },
+  {
+    href: "https://github.com/gtktsc/ascii-chart",
+    label: "Source repository",
+    title: "Library repo",
+  },
+  {
+    href: "https://www.npmjs.com/package/simple-ascii-chart-cli",
+    label: "CLI package",
+    title: "simple-ascii-chart-cli",
+  },
+  {
+    href: "https://github.com/gtktsc/simple-ascii-chart-cli",
+    label: "Source repository",
+    title: "CLI repo",
+  },
+];
+
+export default function Home() {
+  return (
+    <PublicPage
+      actions={
+        <ActionLink href="/playground" tone="primary">
+          Open playground
+        </ActionLink>
+      }
+      description="Terminal-native TypeScript charts for CLIs, logs, APIs, and docs."
+      title="simple-ascii-chart"
+    >
+      <Stack gap="lg">
+        <Prose>
+          <p>
+            Simple ASCII Chart is a lightweight and flexible TypeScript library
+            for customizable ASCII charts directly in terminal output. It
+            visualizes two-dimensional data, multiple series, colors,
+            formatting, thresholds, legends, and axis labels.
+          </p>
+        </Prose>
+
+        <div className="chart-gif-wrapper">
+          <Image
+            alt="Simple ASCII Chart"
+            height={352}
+            loading="eager"
+            src="/simple-asci-chart.gif"
+            unoptimized
+            width={742}
+          />
         </div>
-        <div></div>
-        <Link href="https://www.npmjs.com/package/simple-ascii-chart">
-          simple-ascii-chart NPM package
-        </Link>
-        <div></div>
-        <Link href="https://github.com/gtktsc/ascii-chart">
-          simple-ascii-chart repo
-        </Link>
-        <div></div>
-        <Link href="https://www.npmjs.com/package/simple-ascii-chart-cli">
-          simple-ascii-chart-cli NPM package
-        </Link>
-        <div></div>
-        <Link href="https://github.com/gtktsc/simple-ascii-chart-cli">
-          simple-ascii-chart-cli repo
-        </Link>
-      </div>
-      <div>
-        Support If this project helps you, consider supporting my open-source
-        work:{" "}
-        <Link href="https://buymeacoffee.com/gtktsc">Buy me a coffee</Link>
-      </div>
-    </div>
+
+        <CodeSnippet language="javascript">{demoCode}</CodeSnippet>
+
+        <Prose>
+          <p>
+            Generate compact charts where graphical rendering is not available:
+            command-line tools, build logs, API responses, diagnostics, and
+            lightweight dashboards.
+          </p>
+        </Prose>
+
+        <SimpleGrid minItemWidth="220px">
+          <ActionLink href="/usage" variant="soft">
+            Usage
+          </ActionLink>
+          <ActionLink href="/documentation" variant="soft">
+            API documentation
+          </ActionLink>
+        </SimpleGrid>
+
+        <SimpleGrid minItemWidth="220px">
+          {resources.map((resource) => (
+            <Card key={resource.href} title={resource.title} variant="soft">
+              <PixxlLink href={resource.href}>{resource.label}</PixxlLink>
+            </Card>
+          ))}
+        </SimpleGrid>
+
+        <Section title="Support" variant="soft">
+          <Prose density="compact">
+            <p>
+              If this project helps you, consider supporting the open-source
+              work:{" "}
+              <PixxlLink href="https://buymeacoffee.com/gtktsc">
+                Buy me a coffee
+              </PixxlLink>
+              .
+            </p>
+          </Prose>
+        </Section>
+      </Stack>
+    </PublicPage>
   );
 }

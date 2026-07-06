@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Affix, PixxlProvider } from "@pixxl/components";
+import "@pixxl/components/styles.css";
 import "../styles/global.css";
+import SiteNavbar from "../components/SiteNavbar";
 
 // Define static metadata
 export const metadata: Metadata = {
@@ -25,17 +27,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <nav className="navbar">
-          <div className="navbar-links">
-            <span>simple-ascii-chart</span>
-            <Link href="/">About</Link>
-            <Link href="/usage">Usage</Link>
-            <Link href="/examples">Examples</Link>
-            <Link href="/documentation">Documentation</Link>
-            <Link href="/playground">Playground</Link>
-          </div>
-        </nav>
-        <main>{children}</main>
+        <PixxlProvider className="site-shell">
+          <Affix className="site-navbar-affix">
+            <SiteNavbar />
+          </Affix>
+          <main className="site-main">{children}</main>
+        </PixxlProvider>
       </body>
     </html>
   );

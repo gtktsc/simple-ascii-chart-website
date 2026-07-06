@@ -1,26 +1,40 @@
-import Link from "next/link";
-import CodeBlock from "../../components/CopyablePlot";
+import {
+  Code,
+  Link as PixxlLink,
+  Prose,
+  PublicPage,
+  Section,
+  Stack,
+} from "@pixxl/components";
+import CodeSnippet from "../../components/CodeSnippet";
 
 export default function Usage() {
   return (
-    <div>
-      <p>
-        Simple ASCII Chart is a versatile tool that allows you to generate
-        ASCII-based charts in different environments: as a library, via the CLI,
-        or through the API.
-      </p>
+    <PublicPage
+      description="Install the library, run the CLI, or call the chart API."
+      title="Usage"
+    >
+      <Stack gap="lg">
+        <Prose>
+          <p>
+            Simple ASCII Chart generates ASCII-based charts in different
+            environments: as a TypeScript library, through the CLI, or over the
+            API.
+          </p>
+        </Prose>
 
-      <h2>Library Usage</h2>
-      <p>
-        To use the <strong>simple-ascii-chart</strong> library in your project,
-        install it via npm or yarn:
-      </p>
-
-      <CodeBlock bash>npm install simple-ascii-chart</CodeBlock>
-      <CodeBlock bash>yarn add simple-ascii-chart</CodeBlock>
-
-      <p>Once installed, import and use it in your code like this:</p>
-      <CodeBlock javascript>{`import plot from 'simple-ascii-chart';
+        <Section title="Library usage">
+          <Prose>
+            <p>
+              Install <strong>simple-ascii-chart</strong> with npm or yarn:
+            </p>
+          </Prose>
+          <CodeSnippet language="bash">npm install simple-ascii-chart</CodeSnippet>
+          <CodeSnippet language="bash">yarn add simple-ascii-chart</CodeSnippet>
+          <Prose>
+            <p>Import and call the chart function from application code:</p>
+          </Prose>
+          <CodeSnippet language="javascript">{`import plot from 'simple-ascii-chart';
 
 const input = [
   [1, 1],
@@ -31,83 +45,75 @@ const input = [
 
 const settings = { width: 20, height: 10 };
 console.log(plot(input, settings));
-`}</CodeBlock>
+`}</CodeSnippet>
+        </Section>
 
-      <h2>CLI Usage</h2>
-      <p>
-        You can also generate ASCII charts from the command line using the
-        <Link
-          href="https://github.com/gtktsc/simple-ascii-chart-cli"
-          target="_blank"
-        >
-          {" "}
-          Simple ASCII Chart CLI
-        </Link>
-        .
-      </p>
-      <p>To install the CLI globally, run:</p>
-      <CodeBlock bash>npm install -g simple-ascii-chart-cli</CodeBlock>
+        <Section title="CLI usage">
+          <Prose>
+            <p>
+              Generate ASCII charts from the command line with the{" "}
+              <PixxlLink href="https://github.com/gtktsc/simple-ascii-chart-cli">
+                Simple ASCII Chart CLI
+              </PixxlLink>
+              .
+            </p>
+            <p>Install the CLI globally:</p>
+          </Prose>
+          <CodeSnippet language="bash">
+            npm install -g simple-ascii-chart-cli
+          </CodeSnippet>
+          <Prose>
+            <p>Then render a chart directly in the terminal:</p>
+          </Prose>
+          <CodeSnippet language="bash">{`simple-ascii-chart "[[1, 1], [2, 4], [3, 8]]" --width 20 --height 10`}</CodeSnippet>
+        </Section>
 
-      <p>Once installed, you can generate charts directly in your terminal:</p>
-      <CodeBlock
-        bash
-      >{`simple-ascii-chart "[[1, 1], [2, 4], [3, 8]]" --width 20 --height 10`}</CodeBlock>
+        <Section title="API usage">
+          <Prose>
+            <p>The API supports GET query params and POST JSON requests.</p>
+            <p>
+              GET accepts <Code>input</Code> and optional{" "}
+              <Code>settings</Code> query parameters.
+            </p>
+            <ul>
+              <li>
+                <strong>input</strong>: chart data as an array of points.
+              </li>
+              <li>
+                <strong>settings</strong>: optional chart appearance settings.
+              </li>
+            </ul>
+          </Prose>
 
-      <p>
-        This command will output the chart directly in your terminal. For more
-        details, visit the
-        <Link
-          href="https://github.com/gtktsc/simple-ascii-chart-cli"
-          target="_blank"
-        >
-          {" "}
-          CLI GitHub repository
-        </Link>
-        .
-      </p>
-
-      <h2>API Usage</h2>
-      <p>The API supports both GET query params and POST JSON requests.</p>
-      <p>
-        For GET requests, use the same two query parameters as before:
-        <code> input </code> and optional <code> settings</code>.
-      </p>
-      <ul>
-        <li>
-          <strong>input</strong>: The data for the chart, provided as an array
-          of arrays (points).
-        </li>
-        <li>
-          <strong>settings</strong>: Optional settings for customizing the chart
-          appearance (e.g., width, height).
-        </li>
-      </ul>
-
-      <p>GET example:</p>
-      <CodeBlock bash>{`curl -G https://simple-ascii-chart.vercel.app/api \\
+          <CodeSnippet language="bash">{`curl -G https://simple-ascii-chart.vercel.app/api \\
   --data-urlencode 'input=[[1,2],[2,3],[3,4]]' \\
   --data-urlencode 'settings={"width":50,"height":10}'
-`}</CodeBlock>
+`}</CodeSnippet>
 
-      <p>POST example:</p>
-      <CodeBlock bash>{`curl -X POST https://simple-ascii-chart.vercel.app/api \\
+          <CodeSnippet language="bash">{`curl -X POST https://simple-ascii-chart.vercel.app/api \\
   -H 'content-type: application/json' \\
   -d '{"input":[[1,2],[2,3],[3,4]],"settings":{"width":50,"height":10}}'
-`}</CodeBlock>
+`}</CodeSnippet>
 
-      <p>Example API call response:</p>
-      <CodeBlock bash>{`  ▲
+          <Prose>
+            <p>Example API response:</p>
+          </Prose>
+          <CodeSnippet language="bash">{`  ▲
  4┤   ┏━━
   │   ┃
  2┤ ┏━┛
  1┤━┛
   └┬─┬─┬▶
-   1 2 3`}</CodeBlock>
+   1 2 3`}</CodeSnippet>
 
-      <p>
-        Error responses return JSON in a standardized shape:
-        <code>{" { error: { code, message, details? } } "}</code>
-      </p>
-    </div>
+          <Prose>
+            <p>
+              Error responses return JSON as{" "}
+              <Code>{`{ error: { code, message, details? } }`}</Code>.
+            </p>
+          </Prose>
+        </Section>
+      </Stack>
+    </PublicPage>
   );
 }

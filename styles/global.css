@@ -1,144 +1,125 @@
-/* Apply monospaced font to all elements */
-* {
-  font-family: "Courier New", Courier, monospace; /* Monospaced font */
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+:root {
+  --pixxl-color-background: #f7f8fb;
+  --pixxl-color-surface: #ffffff;
+  --pixxl-color-surface-muted: #f2f5f8;
+  --pixxl-color-surface-inverse: #111827;
+  --pixxl-color-accent: #005cc5;
+  --pixxl-color-accent-hover: #004b9f;
+  --pixxl-color-accent-soft: #e4f0ff;
+  --pixxl-font-ui:
+    14px/1.35 "Courier New", Courier, monospace;
+  --pixxl-font-body:
+    16px/1.65 "Courier New", Courier, monospace;
+  --pixxl-font-mono: "Courier New", Courier, monospace;
 }
 
-.chart-gif-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding: 1rem 0;
-}
-.chart-gif-wrapper img{
-  width: 100%;
-  max-width: 800px;
-  height: auto;
-}
-
-/* Basic global styles */
-body {
-  margin: 0;
-  padding: 0;
-}
 html {
   overflow-y: scroll;
 }
 
-/* Styling for the CopyablePlot component */
-.copyable-plot-wrapper {
-  position: relative;
-  padding: 0.625rem 0; /* 10px */
-}
-
-/* Style for the plot container */
-.copyable-plot {
-  border: 0.0625rem solid #ccc; /* 1px */
-  cursor: pointer;
-}
-
-.editor-wrapper {
-  gap: 1rem;
-}
-
-.editor-wrapper section {
-  border: 0.0625rem solid #ccc; /* 1px */
-  padding:1rem;
-  margin-bottom: 1rem;
-}
-
-/* Style for the toast notification */
-.toast-notification {
-  position: fixed;
-  bottom: 1.25rem; /* 20px */
-  right: 1.25rem; /* 20px */
-  background-color: #005cc5;
-  color: #fff;
-  padding: 0.625rem 1.25rem; /* 10px 20px */
-  border-radius: 0.3125rem; /* 5px */
-  font-size: 0.875rem; /* 14px */
-  z-index: 1000;
-  cursor: pointer;
-  transition: opacity 0.3s ease;
-}
-
-.toast-notification:hover {
-  opacity: 1;
-}
-
-/* Heading styles with spacing */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin-top: 1.25rem; /* 20px */
-  margin-bottom: 0.625rem; /* 10px */
-  line-height: 1.2;
-  font-weight: bold;
-  font-family: inherit; /* Inherit the monospaced font */
-}
-
-/* Navbar styling */
-.navbar {
-  position: sticky;
-  top: 0;
-  background-color: white;
-  padding: 0.9375rem 1.25rem; /* 15px 20px */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: none;
-  transition: box-shadow 0.3s ease-in-out;
-  z-index: 1000;
-  font-family: inherit; /* Inherit monospaced font */
-}
-
-.navbar.scrolled {
-  box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1); /* 4px 6px */
-}
-
-/* Navbar links styling */
-.navbar-links a {
-  padding: 0.5rem 0.75rem; /* 8px 12px */
-}
-
-a {
-  color: #005cc5;
-}
-
-/* Spacing for the main content */
-main {
-  padding: 1.25rem; /* 20px */
-  max-width: 62.5rem; /* 1000px */
-  margin: 0 auto;
-  font-size: 1rem; /* 16px */
-  font-family: inherit;
-}
-
-/* Ensure the layout doesn't shift due to scrollbar */
 body {
+  background: var(--pixxl-color-background);
+  color: var(--pixxl-color-text);
+  margin: 0;
+  padding: 0;
   padding-right: calc(100vw - 100%);
 }
 
-/* Responsive design for smaller screens */
-@media (max-width: 900px) {
-  .navbar{
-    position: relative;
-  }
+.site-shell {
+  min-height: 100vh;
+}
 
-  .navbar-links {
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-  }
+.site-main {
+  min-width: 0;
+}
 
-  .navbar-links a {
-    margin: 0.625rem 0; /* 10px */
-    padding: 0.625rem; /* 10px */
-  }
+.site-navbar-affix {
+  background: var(--pixxl-color-surface-translucent);
+  backdrop-filter: blur(12px);
+  z-index: var(--pixxl-z-dropdown);
+}
+
+.site-navbar {
+  background: transparent;
+}
+
+.site-brand {
+  color: var(--pixxl-color-text);
+  text-decoration: none;
+}
+
+.site-nav-link {
+  text-decoration: none;
+}
+
+.site-code-snippet {
+  margin: var(--pixxl-space-3) 0;
+}
+
+.site-code-snippet .hljs {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+}
+
+.site-code-snippet .hljs-comment,
+.site-code-snippet .hljs-quote {
+  color: #93a4b7;
+}
+
+.site-code-snippet .hljs-keyword,
+.site-code-snippet .hljs-selector-tag,
+.site-code-snippet .hljs-subst {
+  color: #7dd3fc;
+}
+
+.site-code-snippet .hljs-string,
+.site-code-snippet .hljs-title,
+.site-code-snippet .hljs-section,
+.site-code-snippet .hljs-attribute {
+  color: #86efac;
+}
+
+.site-code-snippet .hljs-number,
+.site-code-snippet .hljs-literal,
+.site-code-snippet .hljs-variable,
+.site-code-snippet .hljs-template-variable {
+  color: #fdba74;
+}
+
+.chart-gif-wrapper {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: var(--pixxl-space-4) 0;
+  width: 100%;
+}
+
+.chart-gif-wrapper img {
+  border: 1px solid var(--pixxl-color-border);
+  border-radius: var(--pixxl-radius-md);
+  height: auto;
+  max-width: 800px;
+  width: 100%;
+}
+
+.editor-wrapper {
+  display: grid;
+  gap: var(--pixxl-space-4);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  margin-bottom: var(--pixxl-space-4);
+}
+
+.site-editor-card {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.site-editor-card .pixxl-section-body {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.site-playground-output .site-code-snippet {
+  margin: 0;
 }

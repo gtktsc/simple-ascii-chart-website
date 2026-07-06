@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
+import { Prose, PublicPage, Stack } from "@pixxl/components";
+import type { Coordinates, Settings } from "simple-ascii-chart";
 import EditablePlot from "../../components/EditablePlot";
-import { Coordinates, Settings } from "simple-ascii-chart";
 
 function parseInputFromUrl(defaultInput: Coordinates): Coordinates {
   if (typeof window === "undefined") {
@@ -56,12 +57,22 @@ export default function Playground() {
   };
 
   const [input] = useState<Coordinates>(parseInputFromUrl(defaultInput));
-
   const [options] = useState<Settings>(parseOptionsFromUrl(defaultOptions));
 
   return (
-    <div>
-      <EditablePlot input={input} options={options} />
-    </div>
+    <PublicPage
+      description="Edit the input and settings, then render the chart output."
+      title="Playground"
+    >
+      <Stack gap="lg">
+        <Prose>
+          <p>
+            Use Cmd+S or Ctrl+S inside either editor to format and rerun the
+            chart.
+          </p>
+        </Prose>
+        <EditablePlot input={input} options={options} />
+      </Stack>
+    </PublicPage>
   );
 }

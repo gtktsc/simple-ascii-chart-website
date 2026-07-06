@@ -1,27 +1,61 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
-import Editor from "@monaco-editor/react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import Editor, { type OnMount } from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
-import chart, { Coordinates, Settings } from "simple-ascii-chart";
-import CodeBlock from "./CopyablePlot";
+import chart, { type Coordinates, type Settings } from "simple-ascii-chart";
+import { Button, Section, Stack, Text } from "@pixxl/components";
+import CodeSnippet from "./CodeSnippet";
 
 type EditablePlotProps = {
   input: Coordinates;
   options: Settings;
 };
 
+type EditorHandle = Parameters<OnMount>[0];
+
+function renderChart(nextInput: Coordinates, nextOptions: Settings) {
+  try {
+    return chart(nextInput, nextOptions);
+  } catch (error) {
+    if (error instanceof Error) {
+      return `Plotting error: ${error.message}`;
+    }
+
+    return "Plotting error: Unknown error.";
+  }
+}
+
+const editorOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
+  automaticLayout: true,
+  folding: false,
+  fontSize: 14,
+  glyphMargin: false,
+  lineDecorationsWidth: 0,
+  lineNumbers: "off",
+  minimap: { enabled: false },
+  overviewRulerLanes: 0,
+  rulers: [],
+  scrollbar: {
+    vertical: "hidden",
+  },
+  wordWrap: "on",
+};
+
 export default function EditablePlot({ input, options }: EditablePlotProps) {
-  const leftEditorRef = useRef<any>(null);
-  const rightEditorRef = useRef<any>(null);
+  const leftEditorRef = useRef<EditorHandle | null>(null);
+  const rightEditorRef = useRef<EditorHandle | null>(null);
 
-  const [result, setResult] = useState<string | null>(null);
+  const [result, setResult] = useState(() => renderChart(input, options));
 
-  // Run code to extract `input` and `options` values and plot
-  const runCode = () => {
+  const plot = useCallback((nextInput: Coordinates, nextOptions: Settings) => {
+    setResult(renderChart(nextInput, nextOptions));
+  }, []);
+
+  const runCode = useCallback(() => {
     try {
-      const leftCode = leftEditorRef.current?.getValue();
-      const rightCode = rightEditorRef.current?.getValue();
+      const leftCode = leftEditorRef.current?.getValue() ?? "";
+      const rightCode = rightEditorRef.current?.getValue() ?? "";
 
       const userInput = new Function(`${leftCode}; return input;`)();
       const userOptions = new Function(`${rightCode}; return options;`)();
@@ -30,10 +64,10 @@ export default function EditablePlot({ input, options }: EditablePlotProps) {
         (Array.isArray(userInput) || typeof userInput === "object") &&
         typeof userOptions === "object"
       ) {
-        plot(userInput, userOptions);
+        plot(userInput as Coordinates, userOptions as Settings);
       } else {
         setResult(
-          "Ensure 'input' is a valid Coordinates type and 'options' is a Settings object."
+          "Ensure 'input' is a valid Coordinates type and 'options' is a Settings object.",
         );
       }
     } catch (error) {
@@ -41,92 +75,91 @@ export default function EditablePlot({ input, options }: EditablePlotProps) {
         setResult(`Error: ${error.message}`);
       }
     }
-  };
+  }, [plot]);
 
-  // Plot function using Coordinates and Settings types
-  const plot = (input: Coordinates, options: Settings) => {
-    try {
-      setResult(chart(input, options));
-    } catch (error) {
-      if (error instanceof Error) {
-        setResult(`Plotting error: ${error.message}`);
-      }
+  const formatEditor = useCallback(async (editor: EditorHandle | null) => {
+    if (!editor) {
+      return;
     }
-  };
 
-  // Function to handle save shortcut (cmd+s / ctrl+s)
-  const handleSaveShortcut = (editor: any) => {
-    if (editor) {
-      editor.addCommand(
-        monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS,
-        async () => {
-          await formatEditor(editor); // First format the editor
-          runCode(); // Then run the code to regenerate the plot
-        }
-      );
-    }
-  };
+    const action = editor.getAction("editor.action.formatDocument");
+    await action?.run();
+  }, []);
 
-  // Function to format the editor content
-  const formatEditor = async (editor: any) => {
-    if (editor) {
-      const action = editor.getAction("editor.action.formatDocument");
-      await action?.run(); // Format the document before running the code
-    }
-  };
-
-  // Initial call to plot with provided props
-  useEffect(() => {
-    formatEditor(leftEditorRef.current); // Format input on initial load
-    formatEditor(rightEditorRef.current); // Format options on initial load
-    plot(input, options); // Initial plot
-  }, [input, options]);
-
-  const editorOptions = {
-    minimap: { enabled: false },
-    fontSize: 14,
-    lineNumbers: "off" as const,
-    automaticLayout: true,
-    lineDecorationsWidth: 0,
-    glyphMargin: false,
-    folding: false,
-    rulers: [], // No rulers
-    overviewRulerLanes: 0, // Disable overview ruler
-    wordWrap: "on" as const, // Enable word wrapping
-    scrollbar: {
-      vertical: "hidden" as const, // Hide the vertical scrollbar
+  const handleSaveShortcut = useCallback(
+    (editor: EditorHandle) => {
+      editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, async () => {
+        await formatEditor(editor);
+        runCode();
+      });
     },
-  };
+    [formatEditor, runCode],
+  );
+
+  useEffect(() => {
+    void formatEditor(leftEditorRef.current);
+    void formatEditor(rightEditorRef.current);
+  }, [formatEditor]);
 
   return (
-    <>
+    <Stack gap="lg">
       <div className="editor-wrapper">
-        <Editor
-          height="200px"
-          defaultLanguage="javascript"
-          defaultValue={`const input = ${JSON.stringify(input)};`}
-          options={editorOptions}
-          onMount={(editor) => {
-            leftEditorRef.current = editor;
-            handleSaveShortcut(editor); // Register save shortcut
-          }}
-        />
-        <Editor
-          height="200px"
-          defaultLanguage="javascript"
-          defaultValue={`const options = ${JSON.stringify(options)};`}
-          options={editorOptions}
-          onMount={(editor) => {
-            rightEditorRef.current = editor;
-            handleSaveShortcut(editor); // Register save shortcut
-          }}
-        />
+        <Section
+          className="site-editor-card"
+          description="Edit const input."
+          title="Input"
+          variant="soft"
+        >
+          <Editor
+            defaultLanguage="javascript"
+            defaultValue={`const input = ${JSON.stringify(input)};`}
+            height="200px"
+            onMount={(editor) => {
+              leftEditorRef.current = editor;
+              handleSaveShortcut(editor);
+            }}
+            options={editorOptions}
+            theme="light"
+          />
+        </Section>
+
+        <Section
+          className="site-editor-card"
+          description="Edit const options."
+          title="Options"
+          variant="soft"
+        >
+          <Editor
+            defaultLanguage="javascript"
+            defaultValue={`const options = ${JSON.stringify(options)};`}
+            height="200px"
+            onMount={(editor) => {
+              rightEditorRef.current = editor;
+              handleSaveShortcut(editor);
+            }}
+            options={editorOptions}
+            theme="light"
+          />
+        </Section>
       </div>
 
-      <div>
-        <button onClick={runCode}>Run Code and Plot</button>
-        <CodeBlock bash>{result}</CodeBlock>
-      </div>
-    </>
+      <Section
+        actions={
+          <Button onClick={runCode} tone="primary">
+            Run code and plot
+          </Button>
+        }
+        className="site-playground-output"
+        title="Output"
+      >
+        {result ? (
+          <CodeSnippet language="bash" maxHeight="32rem">
+            {result}
+          </CodeSnippet>
+        ) : (
+          <Text tone="muted">Run code to render output.</Text>
+        )}
+      </Section>
+    </Stack>
   );
 }
