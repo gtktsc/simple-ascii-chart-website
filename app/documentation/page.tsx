@@ -1,71 +1,182 @@
+import type { Metadata } from "next";
 import {
-  AnchorNav,
   Card,
   Code,
+  Heading,
+  PageSection,
   Prose,
   PublicPage,
-  Section,
   SimpleGrid,
   Stack,
+  Tag,
 } from "@pixxl-tools/components";
-import CodeSnippet from "../../components/CodeSnippet";
+import CodeCard from "../../components/CodeCard";
+import DocumentationAnchorNav from "../../components/DocumentationAnchorNav";
+import {
+  CODE_SNIPPET_HEIGHTS,
+  PACKAGE_NAME,
+  SITE_ROUTES,
+} from "../../lib/siteConstants";
+import { formatMessage } from "../../lib/messages.mjs";
+import { buildPageMetadata } from "../../lib/seoMetadata";
+import messages from "../../messages/en.json";
 import {
   SETTINGS_DOCS,
   SETTINGS_PREVIEW_INPUT_CODE,
 } from "../generated/settings-docs";
+import type { GeneratedTypeDefinition } from "../generated/settings-docs";
+
+type SettingMessages = Record<string, { description: string; title: string }>;
+
+export const metadata: Metadata = buildPageMetadata({
+  description: messages.documentation.description,
+  pathname: SITE_ROUTES.documentation,
+  title: messages.documentation.title,
+});
+
+const settingMessages: SettingMessages = messages.settings;
+
+function getSettingMessages(key: string) {
+  return (
+    settingMessages[key] ?? {
+      description: "",
+      title: key,
+    }
+  );
+}
 
 const navItems = SETTINGS_DOCS.map((setting) => ({
   href: `#${setting.anchor}`,
   id: setting.key,
-  label: setting.title,
+  label: getSettingMessages(setting.key).title,
 }));
+
+function renderDescription(description: string) {
+  return description.split(/(`[^`]+`)/g).map((part, index) => {
+    if (!part) {
+      return null;
+    }
+
+    if (part.startsWith("`") && part.endsWith("`")) {
+      return <Tag key={`${part}-${index}`}>{part.slice(1, -1)}</Tag>;
+    }
+
+    return part;
+  });
+}
+
+function renderMetadataTag(value: string) {
+  return (
+    <Tag className="documentation-metadata-tag">
+      <Code>{value}</Code>
+    </Tag>
+  );
+}
+
+function formatTypeDefinition(definition: GeneratedTypeDefinition) {
+  return `type ${definition.name} = ${definition.signature};`;
+}
 
 export default function Documentation() {
   return (
     <PublicPage
-      description="Generated configuration reference from the installed package metadata."
-      title="Documentation"
+      description={messages.documentation.description}
+      title={messages.documentation.title}
     >
       <Stack gap="lg">
-        <Prose>
-          <p>
-            The options below are generated from the installed{" "}
-            <Code>simple-ascii-chart</Code> package metadata. This page updates
-            through the docs generation pipeline to stay in parity with the
-            library.
-          </p>
-        </Prose>
+        <PageSection>
+          <Prose>
+            <p>
+              {messages.documentation.introPrefix} <Code>{PACKAGE_NAME}</Code>{" "}
+              {messages.documentation.introSuffix}
+            </p>
+          </Prose>
+        </PageSection>
 
-        <Card title="Settings index" variant="soft">
-          <AnchorNav items={navItems} orientation="vertical" />
-        </Card>
+        <div className="documentation-layout">
+          <aside className="documentation-index">
+            <Card
+              padding="lg"
+              title={messages.documentation.settingsIndex}
+              variant="soft"
+            >
+              <DocumentationAnchorNav items={navItems} />
+            </Card>
+          </aside>
 
-        {SETTINGS_DOCS.map((setting) => (
-          <Section id={setting.anchor} key={setting.key} title={setting.title}>
-            <Stack gap="md">
-              <SimpleGrid minItemWidth="220px">
-                <Card title="Setting key" variant="soft">
-                  <Code>{setting.key}</Code>
-                </Card>
-                <Card title="Type" variant="soft">
-                  <Code>{setting.typeSignature}</Code>
-                </Card>
-              </SimpleGrid>
+          <Stack className="documentation-settings" gap="lg">
+            {SETTINGS_DOCS.map((setting) => {
+              const settingMessage = getSettingMessages(setting.key);
 
-              <Prose density="compact">
-                <p>{setting.description}</p>
-              </Prose>
+              return (
+                <PageSection
+                  id={setting.anchor}
+                  key={setting.key}
+                  title={settingMessage.title}
+                >
+                  <Stack gap="md">
+                    <SimpleGrid minItemWidth="220px">
+                      <Card padding="lg" variant="soft">
+                        <Stack gap="sm">
+                          <Heading as="h3" size="sm">
+                            {messages.documentation.settingKey}
+                          </Heading>
+                          {renderMetadataTag(setting.key)}
+                        </Stack>
+                      </Card>
+                      <Card padding="lg" variant="soft">
+                        <Stack gap="sm">
+                          <Heading as="h3" size="sm">
+                            {messages.common.type}
+                          </Heading>
+                          {renderMetadataTag(setting.typeSignature)}
+                          {setting.typeDefinitions.length > 0 ? (
+                            <Stack gap="xs">
+                              {setting.typeDefinitions.map((definition) => (
+                                <pre
+                                  className="documentation-type-definition"
+                                  key={definition.name}
+                                >
+                                  <code>{formatTypeDefinition(definition)}</code>
+                                </pre>
+                              ))}
+                            </Stack>
+                          ) : null}
+                        </Stack>
+                      </Card>
+                    </SimpleGrid>
 
-              <CodeSnippet language="javascript" maxHeight="22rem">{`const input = ${SETTINGS_PREVIEW_INPUT_CODE};
-const settings = ${setting.exampleSettings};
+                    <Prose density="compact">
+                      <p>{renderDescription(settingMessage.description)}</p>
+                    </Prose>
 
-console.log(plot(input, settings));`}</CodeSnippet>
-              <CodeSnippet language="bash" maxHeight="28rem">
-                {setting.preview}
-              </CodeSnippet>
-            </Stack>
-          </Section>
-        ))}
+                    <CodeCard
+                      expandable
+                      language="javascript"
+                      maxHeight={CODE_SNIPPET_HEIGHTS.documentationSource}
+                      title={messages.common.options}
+                    >
+                      {formatMessage(
+                        messages.documentation.snippets.previewSource,
+                        {
+                          input: SETTINGS_PREVIEW_INPUT_CODE,
+                          settings: setting.exampleSettings,
+                        },
+                      )}
+                    </CodeCard>
+                    <CodeCard
+                      language="bash"
+                      maxHeight={CODE_SNIPPET_HEIGHTS.documentationPreview}
+                      title={messages.common.output}
+                    >
+                      {setting.preview}
+                    </CodeCard>
+                  </Stack>
+                </PageSection>
+              );
+            })}
+          </Stack>
+        </div>
       </Stack>
     </PublicPage>
   );

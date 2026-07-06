@@ -1,148 +1,172 @@
-import Image from "next/image";
+import type { Metadata } from "next";
 import {
   ActionLink,
   Card,
+  Heading,
   Link as PixxlLink,
   MediaStage,
-  Prose,
+  PageSection,
   PublicPage,
-  Section,
   SimpleGrid,
   Stack,
+  Text,
 } from "@pixxl-tools/components";
-import CodeSnippet from "../components/CodeSnippet";
+import CodeCard from "../components/CodeCard";
+import AboutDemoImage from "../components/AboutDemoImage";
+import {
+  CODE_SNIPPET_HEIGHTS,
+  EXTERNAL_LINKS,
+  PACKAGE_NAME,
+  SITE_ROUTES,
+} from "../lib/siteConstants";
+import { buildPageMetadata } from "../lib/seoMetadata";
+import {
+  createSoftwareSourceCodeStructuredData,
+  createWebSiteStructuredData,
+} from "../lib/structuredData";
+import messages from "../messages/en.json";
+import JsonLd from "../components/JsonLd";
 
-const demoCode = `let step = 0;
-const interval = 0.1;
-const maxPoints = 20;
-const sinPoints: Point[] = [];
-const cosPoints: Point[] = [];
-
-setInterval(() => {
-  console.clear();
-
-  sinPoints.push([step, Math.sin(step)]);
-  cosPoints.push([step, Math.cos(step)]);
-
-  if (sinPoints.length > maxPoints) sinPoints.shift();
-  if (cosPoints.length > maxPoints) cosPoints.shift();
-
-  console.log(
-    plot([sinPoints, cosPoints], {
-      showTickLabel: true,
-      color: ['ansiRed', 'ansiBlue'],
-      width: 120,
-      height: 16,
-      yRange: [-1, 1],
-      xLabel: 'Step (π)',
-      yLabel: 'Amplitude',
-      legend: { position: 'bottom', series: ['Sine', 'Cosine'] },
-      axisCenter: [undefined, 0],
-      formatter: (x, { axis }) => {
-        if (axis === 'y') return x;
-        return \`\${(x / Math.PI).toFixed(1)}π\`;
-      },
-    }),
-  );
-
-  step += interval;
-}, 200);`;
+export const metadata: Metadata = buildPageMetadata({
+  description: messages.home.description,
+  pathname: SITE_ROUTES.home,
+  title: messages.metadata.homeTitle,
+});
 
 const resources = [
   {
-    href: "https://www.npmjs.com/package/simple-ascii-chart",
-    label: "Library package",
-    title: "simple-ascii-chart",
+    href: EXTERNAL_LINKS.libraryPackage,
+    label: messages.home.resources.libraryPackage.label,
+    title: messages.home.resources.libraryPackage.title,
   },
   {
-    href: "https://github.com/gtktsc/ascii-chart",
-    label: "Source repository",
-    title: "Library repo",
+    href: EXTERNAL_LINKS.libraryRepository,
+    label: messages.home.resources.libraryRepository.label,
+    title: messages.home.resources.libraryRepository.title,
   },
   {
-    href: "https://www.npmjs.com/package/simple-ascii-chart-cli",
-    label: "CLI package",
-    title: "simple-ascii-chart-cli",
+    href: EXTERNAL_LINKS.cliPackage,
+    label: messages.home.resources.cliPackage.label,
+    title: messages.home.resources.cliPackage.title,
   },
   {
-    href: "https://github.com/gtktsc/simple-ascii-chart-cli",
-    label: "Source repository",
-    title: "CLI repo",
+    href: EXTERNAL_LINKS.cliRepository,
+    label: messages.home.resources.cliRepository.label,
+    title: messages.home.resources.cliRepository.title,
   },
 ];
 
-export default function Home() {
+const primaryLinks = [
+  {
+    href: SITE_ROUTES.usage,
+    label: messages.home.usageLink,
+  },
+  {
+    href: SITE_ROUTES.documentation,
+    label: messages.home.documentationLink,
+  },
+];
+
+function LinkedCard({
+  href,
+  label,
+  title,
+}: {
+  href: string;
+  label?: string;
+  title: string;
+}) {
   return (
-    <PublicPage
-      actions={
-        <ActionLink href="/playground" tone="primary">
-          Open playground
-        </ActionLink>
-      }
-      description="Terminal-native TypeScript charts for CLIs, logs, APIs, and docs."
-      title="simple-ascii-chart"
-    >
-      <Stack gap="lg">
-        <Prose>
-          <p>
-            Simple ASCII Chart is a lightweight and flexible TypeScript library
-            for customizable ASCII charts directly in terminal output. It
-            visualizes two-dimensional data, multiple series, colors,
-            formatting, thresholds, legends, and axis labels.
-          </p>
-        </Prose>
+    <PixxlLink href={href}>
+      <Card padding="lg">
+        <Stack gap="md">
+          <Heading as="h2" size="sm">
+            {title}
+          </Heading>
+          {label ? <Text tone="muted">{label}</Text> : null}
+        </Stack>
+      </Card>
+    </PixxlLink>
+  );
+}
 
-        <MediaStage aspectRatio="742 / 352" fit="contain">
-          <Image
-            alt="Simple ASCII Chart"
-            height={352}
-            loading="eager"
-            src="/simple-asci-chart.gif"
-            unoptimized
-            width={742}
-          />
-        </MediaStage>
+export default function Home() {
+  const structuredData = [
+    createWebSiteStructuredData(),
+    createSoftwareSourceCodeStructuredData(),
+  ];
 
-        <CodeSnippet language="javascript">{demoCode}</CodeSnippet>
-
-        <Prose>
-          <p>
-            Generate compact charts where graphical rendering is not available:
-            command-line tools, build logs, API responses, diagnostics, and
-            lightweight dashboards.
-          </p>
-        </Prose>
-
-        <SimpleGrid minItemWidth="220px">
-          <ActionLink href="/usage" variant="soft">
-            Usage
+  return (
+    <>
+      <JsonLd data={structuredData} />
+      <PublicPage
+        actions={
+          <ActionLink href={SITE_ROUTES.playground} tone="primary">
+            {messages.home.primaryAction}
           </ActionLink>
-          <ActionLink href="/documentation" variant="soft">
-            API documentation
-          </ActionLink>
-        </SimpleGrid>
+        }
+        description={messages.home.description}
+        title={PACKAGE_NAME}
+      >
+        <Stack gap="lg">
+          <PageSection title={PACKAGE_NAME}>
+            <Stack gap="md">
+              <Text>{messages.home.intro}</Text>
 
-        <SimpleGrid minItemWidth="220px">
-          {resources.map((resource) => (
-            <Card key={resource.href} title={resource.title} variant="soft">
-              <PixxlLink href={resource.href}>{resource.label}</PixxlLink>
-            </Card>
-          ))}
-        </SimpleGrid>
+              <MediaStage aspectRatio="16 / 9" fit="cover">
+                <AboutDemoImage alt={messages.home.heroAlt} />
+              </MediaStage>
 
-        <Section title="Support" variant="soft">
-          <Prose density="compact">
-            <p>
-              If this project helps you, consider supporting the open-source
-              work:{" "}
-              <PixxlLink href="https://buymeacoffee.com/gtktsc">
-                Buy me a coffee
+              <CodeCard
+                expandable
+                language="javascript"
+                maxHeight={CODE_SNIPPET_HEIGHTS.homeDemo}
+                title={messages.home.demoCodeTitle}
+                variant="soft"
+              >
+                {messages.home.demoCode}
+              </CodeCard>
+
+              <Text tone="muted">{messages.home.useCases}</Text>
+            </Stack>
+          </PageSection>
+
+          <PageSection>
+            <SimpleGrid minItemWidth="220px">
+              {primaryLinks.map((link) => (
+                <LinkedCard
+                  href={link.href}
+                  key={link.href}
+                  title={link.label}
+                />
+              ))}
+            </SimpleGrid>
+          </PageSection>
+
+          <PageSection>
+            <SimpleGrid minItemWidth="220px">
+              {resources.map((resource) => (
+                <LinkedCard
+                  href={resource.href}
+                  key={resource.href}
+                  label={resource.label}
+                  title={resource.title}
+                />
+              ))}
+            </SimpleGrid>
+          </PageSection>
+
+          <PageSection title={messages.home.support.title}>
+            <Text>
+              {messages.home.support.prefix}{" "}
+              <PixxlLink href={EXTERNAL_LINKS.support}>
+                {messages.home.support.link}
               </PixxlLink>
               .
-            </p>
-          </Prose>
-        </Section>
-      </Stack>
-    </PublicPage>
+            </Text>
+          </PageSection>
+        </Stack>
+      </PublicPage>
+    </>
   );
 }

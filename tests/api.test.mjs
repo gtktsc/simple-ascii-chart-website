@@ -5,7 +5,7 @@ import {
   handlePostChartRequest,
 } from "../lib/api.mjs";
 
-async function expectJsonError(response, status) {
+async function expectJsonError(response, status, expectedError = {}) {
   assert.equal(response.status, status);
   assert.equal(
     response.headers.get("content-type"),
@@ -17,6 +17,20 @@ async function expectJsonError(response, status) {
   assert.ok(payload.error);
   assert.equal(typeof payload.error.code, "string");
   assert.equal(typeof payload.error.message, "string");
+
+  if (expectedError.code) {
+    assert.equal(payload.error.code, expectedError.code);
+  }
+
+  if (expectedError.message) {
+    assert.equal(payload.error.message, expectedError.message);
+  }
+
+  if (expectedError.details) {
+    assert.equal(payload.error.details, expectedError.details);
+  }
+
+  return payload;
 }
 
 test("GET /api returns chart for valid input", async () => {
@@ -36,7 +50,32 @@ test("GET /api returns structured error on invalid input JSON", async () => {
   const request = new Request("http://localhost/api?input=%5B1,2");
   const response = handleGetChartRequest(request);
 
-  await expectJsonError(response, 400);
+  await expectJsonError(response, 400, {
+    code: "INVALID_INPUT_JSON",
+    message: "Invalid input JSON.",
+  });
+});
+
+test("GET /api returns structured error on missing input", async () => {
+  const request = new Request("http://localhost/api");
+  const response = handleGetChartRequest(request);
+
+  await expectJsonError(response, 400, {
+    code: "MISSING_INPUT",
+    message: "Missing required query parameter: input.",
+  });
+});
+
+test("GET /api returns structured error on invalid settings JSON", async () => {
+  const request = new Request(
+    "http://localhost/api?input=%5B%5B1%2C1%5D%5D&settings=%7Bbad"
+  );
+  const response = handleGetChartRequest(request);
+
+  await expectJsonError(response, 400, {
+    code: "INVALID_SETTINGS_JSON",
+    message: "Invalid settings JSON.",
+  });
 });
 
 test("POST /api returns chart for valid body", async () => {
@@ -68,7 +107,10 @@ test("POST /api returns structured error on missing input", async () => {
   });
 
   const response = await handlePostChartRequest(request);
-  await expectJsonError(response, 400);
+  await expectJsonError(response, 400, {
+    code: "MISSING_INPUT",
+    message: "Missing required body field: input.",
+  });
 });
 
 test("POST /api returns structured error on malformed JSON body", async () => {
@@ -79,5 +121,22 @@ test("POST /api returns structured error on malformed JSON body", async () => {
   });
 
   const response = await handlePostChartRequest(request);
-  await expectJsonError(response, 400);
+  await expectJsonError(response, 400, {
+    code: "INVALID_BODY_JSON",
+    message: "Request body must be valid JSON.",
+  });
+});
+
+test("POST /api returns structured error on non-object body", async () => {
+  const request = new Request("http://localhost/api", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify([1, 2, 3]),
+  });
+
+  const response = await handlePostChartRequest(request);
+  await expectJsonError(response, 400, {
+    code: "INVALID_BODY",
+    message: "Request body must be a JSON object.",
+  });
 });

@@ -1,0 +1,92 @@
+.pixxl-code-frame,
+.pixxl-code-block {
+  background: var(--pixxl-color-surface-muted);
+  color: var(--pixxl-color-text);
+}
+
+.site-code-card[data-collapsed="true"] > :not(.pixxl-card-header) {
+  display: none;
+}
+
+.about-demo-image {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.documentation-layout {
+  display: grid;
+  gap: var(--pixxl-space-5);
+}
+
+.documentation-index,
+.documentation-settings {
+  min-width: 0;
+}
+
+.documentation-metadata-tag {
+  align-self: start;
+  max-width: 100%;
+  width: fit-content;
+}
+
+.documentation-metadata-tag .pixxl-code {
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.documentation-type-definition {
+  background: var(--pixxl-color-surface);
+  border: 1px solid var(--pixxl-color-border);
+  border-radius: var(--pixxl-radius-sm);
+  color: var(--pixxl-color-text);
+  font: var(--pixxl-font-mono);
+  font-size: 12px;
+  margin: 0;
+  overflow: auto;
+  padding: var(--pixxl-space-3);
+  white-space: pre-wrap;
+}
+
+.playground-editor-grid,
+.playground-editor-grid > *,
+.playground-editor-section,
+.playground-editor-section .pixxl-section-body,
+.playground-editor-shell {
+  min-width: 0;
+}
+
+.playground-editor-shell {
+  inline-size: 100%;
+  max-inline-size: 100%;
+  overflow: hidden;
+}
+
+.playground-editor-shell .monaco-editor,
+.playground-editor-shell .monaco-editor .overflow-guard {
+  max-inline-size: 100%;
+}
+
+.playground-output-section .pixxl-section-header {
+  flex-wrap: wrap;
+}
+
+@media (min-width: 768px) {
+  .documentation-layout {
+    align-items: start;
+    grid-template-columns: minmax(14rem, 18rem) minmax(0, 1fr);
+  }
+}
+
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+  .documentation-index {
+    position: sticky;
+    top: var(--pixxl-space-5);
+  }
+
+  .documentation-index > .pixxl-card {
+    max-height: calc(100vh - var(--pixxl-space-5) - var(--pixxl-space-5));
+    overflow: auto;
+  }
+}

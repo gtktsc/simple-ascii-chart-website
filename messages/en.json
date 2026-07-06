@@ -1,0 +1,343 @@
+{
+  "metadata": {
+    "title": "simple-ascii-chart",
+    "titleTemplate": "%s | simple-ascii-chart",
+    "homeTitle": "simple-ascii-chart | Terminal-native TypeScript ASCII charts",
+    "description": "Simple ASCII Chart is a TypeScript library and CLI for rendering customizable ASCII charts in terminals, logs, API responses, and documentation.",
+    "authorName": "Bartosz Gryta",
+    "authorUrl": "https://gtktsc.com",
+    "socialImageAlt": "simple-ascii-chart terminal chart preview"
+  },
+  "common": {
+    "copy": "Copy",
+    "copied": "Copied",
+    "expand": "Expand",
+    "collapse": "Collapse",
+    "input": "Input",
+    "options": "Options",
+    "output": "Output",
+    "type": "Type"
+  },
+  "nav": {
+    "mainNavigationLabel": "Main navigation",
+    "openMenuLabel": "Open main menu",
+    "closeMenuLabel": "Close main menu",
+    "about": "About",
+    "usage": "Usage",
+    "examples": "Examples",
+    "documentation": "Documentation",
+    "playground": "Playground"
+  },
+  "footer": {
+    "credit": "Designed and built by Bartosz Gryta (gtktsc).",
+    "support": "Support",
+    "separator": "/",
+    "copyright": "{year} © Bartosz Gryta. All rights reserved."
+  },
+  "home": {
+    "description": "Create terminal-native TypeScript ASCII charts for CLIs, logs, API responses, dashboards, and developer documentation.",
+    "primaryAction": "Open playground",
+    "heroAlt": "Simple ASCII Chart",
+    "intro": "Simple ASCII Chart is a lightweight and flexible TypeScript library for customizable ASCII charts directly in terminal output. It visualizes two-dimensional data, multiple series, colors, formatting, thresholds, legends, and axis labels.",
+    "useCases": "Generate compact charts where graphical rendering is not available: command-line tools, build logs, API responses, diagnostics, and lightweight dashboards.",
+    "usageLink": "Usage",
+    "documentationLink": "API documentation",
+    "demoCodeTitle": "Example code",
+    "demoCode": "let step = 0;\nconst interval = 0.1;\nconst maxPoints = 20;\nconst sinPoints: Point[] = [];\nconst cosPoints: Point[] = [];\n\nsetInterval(() => {\n  console.clear();\n\n  sinPoints.push([step, Math.sin(step)]);\n  cosPoints.push([step, Math.cos(step)]);\n\n  if (sinPoints.length > maxPoints) sinPoints.shift();\n  if (cosPoints.length > maxPoints) cosPoints.shift();\n\n  console.log(\n    plot([sinPoints, cosPoints], {\n      showTickLabel: true,\n      color: ['ansiRed', 'ansiBlue'],\n      width: 120,\n      height: 16,\n      yRange: [-1, 1],\n      xLabel: 'Step (π)',\n      yLabel: 'Amplitude',\n      legend: { position: 'bottom', series: ['Sine', 'Cosine'] },\n      axisCenter: [undefined, 0],\n      formatter: (x, { axis }) => {\n        if (axis === 'y') return x;\n        return `${(x / Math.PI).toFixed(1)}π`;\n      },\n    }),\n  );\n\n  step += interval;\n}, 200);",
+    "resources": {
+      "libraryPackage": {
+        "label": "Library package",
+        "title": "simple-ascii-chart"
+      },
+      "libraryRepository": {
+        "label": "Source repository",
+        "title": "Library repo"
+      },
+      "cliPackage": {
+        "label": "CLI package",
+        "title": "simple-ascii-chart-cli"
+      },
+      "cliRepository": {
+        "label": "Source repository",
+        "title": "CLI repo"
+      }
+    },
+    "support": {
+      "title": "Support",
+      "prefix": "If this project helps you, consider supporting the open-source work:",
+      "link": "Buy me a coffee"
+    }
+  },
+  "usage": {
+    "title": "Usage",
+    "description": "Install simple-ascii-chart, render charts from TypeScript, use the CLI, or call the hosted chart API.",
+    "intro": "Simple ASCII Chart generates ASCII-based charts in different environments: as a TypeScript library, through the CLI, or over the API.",
+    "library": {
+      "title": "Library usage",
+      "installPrefix": "Install",
+      "installSuffix": "with npm or yarn:",
+      "import": "Import and call the chart function from application code:"
+    },
+    "cli": {
+      "title": "CLI usage",
+      "introPrefix": "Generate ASCII charts from the command line with the",
+      "link": "Simple ASCII Chart CLI",
+      "install": "Install the CLI globally:",
+      "render": "Then render a chart directly in the terminal:"
+    },
+    "api": {
+      "title": "API usage",
+      "intro": "The API supports GET query params and POST JSON requests.",
+      "get": "GET accepts",
+      "andOptional": "and optional",
+      "queryParameters": "query parameters.",
+      "inputDescription": "chart data as an array of points.",
+      "settingsDescription": "optional chart appearance settings.",
+      "response": "Example API response:",
+      "errorResponse": "Error responses return JSON as"
+    },
+    "snippets": {
+      "npmInstall": "npm install simple-ascii-chart",
+      "yarnInstall": "yarn add simple-ascii-chart",
+      "libraryExample": "import plot from 'simple-ascii-chart';\n\nconst input = [\n  [1, 1],\n  [2, 4],\n  [3, 8],\n  [4, 16],\n];\n\nconst settings = { width: 20, height: 10 };\nconsole.log(plot(input, settings));\n",
+      "cliInstall": "npm install -g {cliPackageName}",
+      "cliExample": "simple-ascii-chart \"[[1, 1], [2, 4], [3, 8]]\" --width 20 --height 10",
+      "apiGet": "curl -G https://simple-ascii-chart.vercel.app/api \\\n  --data-urlencode 'input=[[1,2],[2,3],[3,4]]' \\\n  --data-urlencode 'settings={\"width\":50,\"height\":10}'\n",
+      "apiPost": "curl -X POST https://simple-ascii-chart.vercel.app/api \\\n  -H 'content-type: application/json' \\\n  -d '{\"input\":[[1,2],[2,3],[3,4]],\"settings\":{\"width\":50,\"height\":10}}'\n",
+      "apiResponse": "  ▲\n 4┤   ┏━━\n  │   ┃\n 2┤ ┏━┛\n 1┤━┛\n  └┬─┬─┬▶\n   1 2 3",
+      "errorShape": "{ error: { code, message, details? } }"
+    }
+  },
+  "examples": {
+    "title": "Examples",
+    "description": "Browse simple-ascii-chart examples with generated input, settings, terminal output, and playground links.",
+    "openInPlayground": "Open in Playground",
+    "notShareable": "Not shareable via URL: this example includes values that cannot be safely serialized to query parameters.",
+    "items": {
+      "basicWidthHeight": "Basic Example with Width/Height",
+      "logarithmicScale": "Logarithmic Scale",
+      "exponentialGrowth": "Exponential Growth",
+      "areaFill": "With Area Fill",
+      "customThresholds": "Custom Thresholds",
+      "withPoints": "With points",
+      "customAxisCenter": "With Custom Axis Center",
+      "barChart": "Bar Chart",
+      "horizontalBarChart": "Horizontal Bar Chart",
+      "titleAndLabels": "With Title and Labels",
+      "legend": "With Legend",
+      "complexLegend": "With complex Legend",
+      "singleSeriesBarChart": "Bar chart",
+      "negativeBarChart": "Bar chart with negative values and axis center",
+      "singleSeriesHorizontalBarChart": "Horizontal bar chart",
+      "customFormatter": "Custom Formatter"
+    },
+    "sampleData": {
+      "samplePlot": "Sample Plot",
+      "xAxis": "X-Axis",
+      "yAxis": "Y-Axis",
+      "seriesOne": "Series 1",
+      "seriesTwo": "Series 2",
+      "legendTitle": "Legend",
+      "shortSeriesOne": "S1",
+      "shortSeriesTwo": "S2",
+      "thresholdOne": "T1",
+      "pointOne": "P1",
+      "pointTwo": "P2"
+    }
+  },
+  "documentation": {
+    "title": "Documentation",
+    "description": "Read generated simple-ascii-chart configuration documentation from the installed package metadata.",
+    "introPrefix": "The options below are generated from the installed",
+    "introSuffix": "package metadata. This page updates through the docs generation pipeline to stay in parity with the library.",
+    "settingsIndex": "Settings index",
+    "settingKey": "Setting key",
+    "snippets": {
+      "previewSource": "const input = {input};\nconst settings = {settings};\n\nconsole.log(plot(input, settings));"
+    }
+  },
+  "playground": {
+    "title": "Playground",
+    "description": "Edit chart input and settings in the browser, then render simple-ascii-chart output instantly.",
+    "shortcutHint": "Use Cmd+S or Ctrl+S inside either editor to format and rerun the chart.",
+    "errors": {
+      "parseInputUrl": "Error parsing input URL parameter:",
+      "parseOptionsUrl": "Error parsing options URL parameter:"
+    }
+  },
+  "theme": {
+    "switchToDark": "Switch to dark mode",
+    "switchToLight": "Switch to light mode",
+    "darkMode": "Dark mode",
+    "lightMode": "Light mode"
+  },
+  "sitePreferences": {
+    "errors": {
+      "missingProvider": "useSitePreferences must be used inside SiteProviders"
+    }
+  },
+  "editablePlot": {
+    "inputDescription": "Edit const input.",
+    "optionsDescription": "Edit const options.",
+    "runAction": "Run code and plot",
+    "emptyOutput": "Run code to render output.",
+    "validationError": "Ensure 'input' is a valid Coordinates type and 'options' is a Settings object.",
+    "plottingError": "Plotting error: {message}",
+    "unknownPlottingError": "Plotting error: Unknown error.",
+    "executionError": "Error: {message}",
+    "templates": {
+      "input": "const input = {input};",
+      "options": "const options = {options};"
+    }
+  },
+  "api": {
+    "errors": {
+      "INVALID_INPUT_JSON": "Invalid input JSON.",
+      "INVALID_SETTINGS_JSON": "Invalid settings JSON.",
+      "MISSING_INPUT_QUERY": "Missing required query parameter: input.",
+      "INVALID_BODY_JSON": "Request body must be valid JSON.",
+      "INVALID_BODY": "Request body must be a JSON object.",
+      "MISSING_INPUT_BODY": "Missing required body field: input.",
+      "INVALID_CHART_DATA": "Unable to render chart from the provided input/settings.",
+      "CHART_ERROR_DETAILS": "{message}"
+    }
+  },
+  "media": {
+    "errors": {
+      "missingExecutable": "Missing executable. Set {envName} or install one of: {candidates}",
+      "commandFailed": "{command} failed with exit {status}"
+    },
+    "logs": {
+      "generatedGif": "Generated {path}"
+    }
+  },
+  "generator": {
+    "errors": {
+      "missingSettingsType": "Unable to locate Settings type definition in d.ts",
+      "missingSettingsReference": "Unable to locate Settings Reference table in README",
+      "missingDescriptions": "Missing README descriptions for Settings keys: {keys}",
+      "missingExamples": "Missing generated examples for Settings keys: {keys}",
+      "extraExamples": "Examples defined for unknown Settings keys: {keys}",
+      "missingGeneratedDocs": "Missing generated docs file: {path}",
+      "staleGeneratedDocs": "Generated docs are out of date. Run: yarn docs:generate",
+      "missingMessages": "Missing messages file: {path}",
+      "staleMessages": "Generated settings messages are out of date. Run: yarn docs:generate"
+    },
+    "logs": {
+      "docsCurrent": "Generated docs are up to date.",
+      "docsWritten": "Generated settings docs: {path}",
+      "messagesWritten": "Generated settings messages: {path}"
+    },
+    "settingExamples": {
+      "title": "Sample Plot Title",
+      "xLabel": "X Axis",
+      "yLabel": "Y Axis",
+      "legendSeriesOne": "Series 1",
+      "formatterLabels": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ]
+    }
+  },
+  "settings": {
+    "color": {
+      "title": "Color",
+      "description": "`Color`, `Color[]`, or `ColorGetter` for series coloring."
+    },
+    "width": {
+      "title": "Width",
+      "description": "Plot width."
+    },
+    "height": {
+      "title": "Height",
+      "description": "Plot height."
+    },
+    "yRange": {
+      "title": "Y Range",
+      "description": "Y-axis range as `[min, max]`. Values outside this range are filtered before rendering."
+    },
+    "showTickLabel": {
+      "title": "Show Tick Label",
+      "description": "Show full tick labels on the Y-axis."
+    },
+    "hideXAxis": {
+      "title": "Hide X Axis",
+      "description": "Hide the X-axis line."
+    },
+    "hideXAxisTicks": {
+      "title": "Hide X Axis Ticks",
+      "description": "Hide X-axis tick markers and labels."
+    },
+    "hideYAxis": {
+      "title": "Hide Y Axis",
+      "description": "Hide the Y-axis line."
+    },
+    "hideYAxisTicks": {
+      "title": "Hide Y Axis Ticks",
+      "description": "Hide Y-axis tick markers and labels."
+    },
+    "customXAxisTicks": {
+      "title": "Custom X Axis Ticks",
+      "description": "Explicit X tick values."
+    },
+    "customYAxisTicks": {
+      "title": "Custom Y Axis Ticks",
+      "description": "Explicit Y tick values."
+    },
+    "title": {
+      "title": "Title",
+      "description": "Chart title shown above the plot."
+    },
+    "xLabel": {
+      "title": "X Label",
+      "description": "X-axis label."
+    },
+    "yLabel": {
+      "title": "Y Label",
+      "description": "Y-axis label."
+    },
+    "thresholds": {
+      "title": "Thresholds",
+      "description": "Threshold lines (`x` and/or `y`) with optional color."
+    },
+    "points": {
+      "title": "Points",
+      "description": "Overlay points with optional color."
+    },
+    "fillArea": {
+      "title": "Fill Area",
+      "description": "Fill area under lines using the `area` chart symbol."
+    },
+    "legend": {
+      "title": "Legend",
+      "description": "Legend config (`position`, `series`, `points`, `thresholds`)."
+    },
+    "axisCenter": {
+      "title": "Axis Center",
+      "description": "Axis center as `[x, y]`. Default axis origin is bottom-left."
+    },
+    "formatter": {
+      "title": "Formatter",
+      "description": "Axis label formatter: `(value, helpers) => string \\| number`."
+    },
+    "lineFormatter": {
+      "title": "Line Formatter",
+      "description": "Custom point renderer: `(args: LineFormatterArgs) => CustomSymbol \\| CustomSymbol[]`."
+    },
+    "symbols": {
+      "title": "Symbols",
+      "description": "Symbol overrides for `axis`, `chart`, `empty`, `background`, `border`, `thresholds`, `point`."
+    },
+    "mode": {
+      "title": "Mode",
+      "description": "Plot mode: `'line'`, `'point'`, `'bar'`, `'horizontalBar'`."
+    },
+    "debugMode": {
+      "title": "Debug Mode",
+      "description": "Enable debug logging for out-of-bounds draw attempts."
+    }
+  }
+}

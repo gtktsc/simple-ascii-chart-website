@@ -1,6 +1,7 @@
 "use client";
 
 import { ClipboardButton, CodeFrame } from "@pixxl-tools/components";
+import messages from "../messages/en.json";
 
 type CodeSnippetProps = {
   children?: string | null;
@@ -19,10 +20,10 @@ export default function CodeSnippet({
     <CodeFrame
       actions={
         <ClipboardButton
-          copiedLabel="Copied"
+          copiedLabel={messages.common.copied}
           data-tone="primary"
           data-variant="solid"
-          label="Copy"
+          label={messages.common.copy}
           resetDelayMs={1800}
           value={code}
         />
