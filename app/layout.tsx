@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Affix, PixxlProvider } from "@pixxl/components";
-import "@pixxl/components/styles.css";
-import "../styles/global.css";
+import { AppMain, AppShell } from "@pixxl-tools/components";
+import "@pixxl-tools/components/styles.css";
+import SiteFooter from "../components/SiteFooter";
 import SiteNavbar from "../components/SiteNavbar";
+import { SiteProviders } from "../components/SiteProviders";
 
 // Define static metadata
 export const metadata: Metadata = {
@@ -24,15 +25,18 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <html lang="en">
-      <body>
-        <PixxlProvider className="site-shell">
-          <Affix className="site-navbar-affix">
+    <html lang="en" suppressHydrationWarning>
+      <body style={{ margin: 0 }}>
+        <SiteProviders>
+          <AppShell density="comfortable">
             <SiteNavbar />
-          </Affix>
-          <main className="site-main">{children}</main>
-        </PixxlProvider>
+            <AppMain>{children}</AppMain>
+            <SiteFooter year={currentYear} />
+          </AppShell>
+        </SiteProviders>
       </body>
     </html>
   );

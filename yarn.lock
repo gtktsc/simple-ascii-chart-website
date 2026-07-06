@@ -571,8 +571,10 @@
   resolved "https://registry.yarnpkg.com/@nolyfill/is-core-module/-/is-core-module-1.0.39.tgz#3dc35ba0f1e66b403c00b39344f870298ebb1c8e"
   integrity sha512-nn5ozdjYQpUCZlWGuxcJY/KpxkWQs4DcbMCmKojjyrYDEAGy4Ce19NN4v5MduafTwJlbKc99UA8YhSVqq9yPZA==
 
-"@pixxl/components@file:../pixxl/components":
+"@pixxl-tools/components@0.1.0":
   version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@pixxl-tools/components/-/components-0.1.0.tgz#54bdd868cf2b55b0c47a405f6d535b7cf55824a5"
+  integrity sha512-mms12LXO1xve/yUMwOvR7LcTv7s6562Y4XbD/oVWuglL02wCOI4bRXPLMkDraCxoVwT2LFK8HuOR1y8GMCwcBA==
 
 "@rtsao/scc@^1.1.0":
   version "1.1.0"
@@ -2038,11 +2040,6 @@ hermes-parser@^0.25.1:
   integrity sha512-6pEjquH3rqaI6cYAXYPcz9MS4rY6R4ngRgrgfDshRptUZIc3lw0MCIJIGDj9++mfySOuPTHB4nrSW99BCvOPIA==
   dependencies:
     hermes-estree "0.25.1"
-
-highlight.js@^11.11.1:
-  version "11.11.1"
-  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-11.11.1.tgz#fca06fa0e5aeecf6c4d437239135fabc15213585"
-  integrity sha512-Xwwo44whKBVCYoliBQwaPvtd/2tYFkRQtXDWj1nackaV2JPXx3L0+Jvd8/qCJ2p+ML0/XVkJ2q+Mr+UVdpJK5w==
 
 ignore@^5.2.0:
   version "5.3.2"

@@ -3,12 +3,13 @@ import {
   ActionLink,
   Card,
   Link as PixxlLink,
+  MediaStage,
   Prose,
   PublicPage,
   Section,
   SimpleGrid,
   Stack,
-} from "@pixxl/components";
+} from "@pixxl-tools/components";
 import CodeSnippet from "../components/CodeSnippet";
 
 const demoCode = `let step = 0;
@@ -91,7 +92,7 @@ export default function Home() {
           </p>
         </Prose>
 
-        <div className="chart-gif-wrapper">
+        <MediaStage aspectRatio="742 / 352" fit="contain">
           <Image
             alt="Simple ASCII Chart"
             height={352}
@@ -100,7 +101,7 @@ export default function Home() {
             unoptimized
             width={742}
           />
-        </div>
+        </MediaStage>
 
         <CodeSnippet language="javascript">{demoCode}</CodeSnippet>
 

@@ -1,12 +1,14 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
+  ActionLink,
+  Link as PixxlLink,
   ResponsiveNavbar,
   type ResponsiveNavbarRenderLinkState,
-} from "@pixxl/components";
-import type { PixxlNavItem } from "@pixxl/components";
+} from "@pixxl-tools/components";
+import type { PixxlNavItem } from "@pixxl-tools/components";
+import NavControls from "./NavControls";
 
 const navItems: readonly PixxlNavItem[] = [
   { href: "/", id: "about", label: "About" },
@@ -22,13 +24,14 @@ export default function SiteNavbar() {
 
   return (
     <ResponsiveNavbar
+      actions={<NavControls />}
       brand={
-        <Link className="site-brand" href="/">
+        <PixxlLink href="/">
           simple-ascii-chart
-        </Link>
+        </PixxlLink>
       }
-      className="site-navbar"
       items={navItems}
+      mobileActions={<NavControls />}
       renderLink={renderNavLink}
       value={value}
     />
@@ -55,17 +58,15 @@ function renderNavLink(
   state: ResponsiveNavbarRenderLinkState,
 ) {
   return (
-    <Link
+    <ActionLink
       aria-current={state.selected ? "page" : undefined}
-      className="pixxl-action-link site-nav-link"
-      data-size="sm"
-      data-state={state.selected ? "selected" : "idle"}
-      data-tone={state.selected ? "primary" : "neutral"}
-      data-variant={state.selected ? "soft" : "ghost"}
       href={item.href ?? "#"}
       onClick={state.mobile ? state.close : undefined}
+      size="sm"
+      tone={state.selected ? "primary" : "neutral"}
+      variant={state.selected ? "soft" : "ghost"}
     >
       {item.label}
-    </Link>
+    </ActionLink>
   );
 }

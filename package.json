@@ -13,9 +13,8 @@
     "deploy": "yarn add simple-ascii-chart --upgrade && git add . && git commit -m'ascii-website: Bump version' && git push -u origin main"
   },
   "dependencies": {
-    "@pixxl/components": "file:../pixxl/components",
+    "@pixxl-tools/components": "0.1.0",
     "@monaco-editor/react": "^4.7.0",
-    "highlight.js": "^11.11.1",
     "monaco-editor": "^0.55.1",
     "next": "16.2.10",
     "react": "19.2.4",

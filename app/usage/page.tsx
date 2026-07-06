@@ -5,7 +5,7 @@ import {
   PublicPage,
   Section,
   Stack,
-} from "@pixxl/components";
+} from "@pixxl-tools/components";
 import CodeSnippet from "../../components/CodeSnippet";
 
 export default function Usage() {

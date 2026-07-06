@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Prose, PublicPage, Stack } from "@pixxl/components";
+import { Prose, PublicPage, Stack } from "@pixxl-tools/components";
 import type { Coordinates, Settings } from "simple-ascii-chart";
 import EditablePlot from "../../components/EditablePlot";
 

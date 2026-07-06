@@ -7,7 +7,7 @@ import {
   Section,
   SimpleGrid,
   Stack,
-} from "@pixxl/components";
+} from "@pixxl-tools/components";
 import CodeSnippet from "../../components/CodeSnippet";
 import {
   SETTINGS_DOCS,

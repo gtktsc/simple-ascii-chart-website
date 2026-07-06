@@ -4,7 +4,13 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Editor, { type OnMount } from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
 import chart, { type Coordinates, type Settings } from "simple-ascii-chart";
-import { Button, Section, Stack, Text } from "@pixxl/components";
+import {
+  Button,
+  Section,
+  SimpleGrid,
+  Stack,
+  Text,
+} from "@pixxl-tools/components";
 import CodeSnippet from "./CodeSnippet";
 
 type EditablePlotProps = {
@@ -103,13 +109,8 @@ export default function EditablePlot({ input, options }: EditablePlotProps) {
 
   return (
     <Stack gap="lg">
-      <div className="editor-wrapper">
-        <Section
-          className="site-editor-card"
-          description="Edit const input."
-          title="Input"
-          variant="soft"
-        >
+      <SimpleGrid minItemWidth="320px">
+        <Section description="Edit const input." title="Input" variant="soft">
           <Editor
             defaultLanguage="javascript"
             defaultValue={`const input = ${JSON.stringify(input)};`}
@@ -123,12 +124,7 @@ export default function EditablePlot({ input, options }: EditablePlotProps) {
           />
         </Section>
 
-        <Section
-          className="site-editor-card"
-          description="Edit const options."
-          title="Options"
-          variant="soft"
-        >
+        <Section description="Edit const options." title="Options" variant="soft">
           <Editor
             defaultLanguage="javascript"
             defaultValue={`const options = ${JSON.stringify(options)};`}
@@ -141,7 +137,7 @@ export default function EditablePlot({ input, options }: EditablePlotProps) {
             theme="light"
           />
         </Section>
-      </div>
+      </SimpleGrid>
 
       <Section
         actions={
@@ -149,7 +145,6 @@ export default function EditablePlot({ input, options }: EditablePlotProps) {
             Run code and plot
           </Button>
         }
-        className="site-playground-output"
         title="Output"
       >
         {result ? (
