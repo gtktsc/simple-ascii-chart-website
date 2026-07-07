@@ -1,6 +1,5 @@
 import {
   EXTERNAL_LINKS,
-  PACKAGE_NAME,
   PIXEL_SITE_LOCALE,
   SITE_ROUTES,
   SITE_SOCIAL_IMAGE,
@@ -20,7 +19,7 @@ export const createWebSiteStructuredData = () => {
     "@type": "WebSite",
     description: messages.metadata.description,
     inLanguage: PIXEL_SITE_LOCALE,
-    name: PACKAGE_NAME,
+    name: messages.metadata.applicationName,
     url: toCanonicalAbsoluteUrl(SITE_ROUTES.home),
   };
 };
@@ -35,7 +34,7 @@ export const createSoftwareSourceCodeStructuredData = () => {
     image: toCanonicalAbsoluteUrl(SITE_SOCIAL_IMAGE.path),
     inLanguage: PIXEL_SITE_LOCALE,
     license: `${EXTERNAL_LINKS.libraryRepository}/blob/main/LICENSE`,
-    name: PACKAGE_NAME,
+    name: messages.metadata.applicationName,
     programmingLanguage: "TypeScript",
     runtimePlatform: "Node.js",
     sameAs: [

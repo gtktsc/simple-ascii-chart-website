@@ -58,7 +58,7 @@ export const buildPageMetadata = ({
         },
       ],
       locale: PIXEL_SITE_LOCALE.replace("-", "_"),
-      siteName: PACKAGE_NAME,
+      siteName: messages.metadata.applicationName,
       title: renderedTitle,
       type: "website",
       url: canonicalUrl,

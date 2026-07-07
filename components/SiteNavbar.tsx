@@ -126,9 +126,9 @@ export default function SiteNavbar() {
 
       {isMobile && isMenuOpen ? (
         <Box as="nav" padding="md" variant="soft">
-          <Stack gap="sm">
+          <Stack align="center" gap="sm">
             {navItems.map(renderLink)}
-            <NavControls />
+            <NavControls justify="center" />
           </Stack>
         </Box>
       ) : null}

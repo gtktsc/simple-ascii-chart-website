@@ -3,6 +3,7 @@ import {
   Container,
   Inline,
   Link as PixxlLink,
+  Stack,
   Tag,
   Text,
 } from "@pixxl-tools/components";
@@ -18,11 +19,11 @@ export default function SiteFooter({ year }: SiteFooterProps) {
   return (
     <AppFooter>
       <Container maxWidth="lg" padding="none">
-        <Inline gap="md" justify="between" wrap>
+        <Stack align="center" className="site-footer-content" gap="sm">
           <Text size="sm" tone="muted">
             {messages.footer.credit}
           </Text>
-          <Inline gap="sm" wrap>
+          <Inline className="site-footer-meta" gap="sm" justify="center" wrap>
             <PixxlLink href={EXTERNAL_LINKS.support}>
               <Tag tone="primary" variant="soft">
                 {messages.footer.support}
@@ -37,7 +38,7 @@ export default function SiteFooter({ year }: SiteFooterProps) {
               })}
             </Text>
           </Inline>
-        </Inline>
+        </Stack>
       </Container>
     </AppFooter>
   );

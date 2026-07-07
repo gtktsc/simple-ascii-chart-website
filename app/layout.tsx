@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     pathname: SITE_ROUTES.home,
     title: messages.metadata.homeTitle,
   }),
-  applicationName: PACKAGE_NAME,
+  applicationName: messages.metadata.applicationName,
   authors: [
     {
       name: messages.metadata.authorName,

@@ -1,4 +1,4 @@
-import test from "node:test";
+import { test } from "vitest";
 import assert from "node:assert/strict";
 import {
   handleGetChartRequest,
@@ -78,6 +78,19 @@ test("GET /api returns structured error on invalid settings JSON", async () => {
   });
 });
 
+test("GET /api returns chart error details when plotting fails", async () => {
+  const request = new Request(
+    `http://localhost/api?input=${encodeURIComponent(JSON.stringify("bad"))}`,
+  );
+  const response = handleGetChartRequest(request);
+
+  await expectJsonError(response, 400, {
+    code: "INVALID_CHART_DATA",
+    details: "input.flat is not a function",
+    message: "Unable to render chart from the provided input/settings.",
+  });
+});
+
 test("POST /api returns chart for valid body", async () => {
   const request = new Request("http://localhost/api", {
     method: "POST",
@@ -132,6 +145,20 @@ test("POST /api returns structured error on non-object body", async () => {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify([1, 2, 3]),
+  });
+
+  const response = await handlePostChartRequest(request);
+  await expectJsonError(response, 400, {
+    code: "INVALID_BODY",
+    message: "Request body must be a JSON object.",
+  });
+});
+
+test("POST /api returns structured error on null body", async () => {
+  const request = new Request("http://localhost/api", {
+    body: "null",
+    headers: { "content-type": "application/json" },
+    method: "POST",
   });
 
   const response = await handlePostChartRequest(request);

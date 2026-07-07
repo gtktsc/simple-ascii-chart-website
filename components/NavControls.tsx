@@ -1,10 +1,20 @@
 "use client";
 
-import { IconButton, Inline, MoonIcon, SunIcon } from "@pixxl-tools/components";
+import {
+  IconButton,
+  Inline,
+  MoonIcon,
+  SunIcon,
+  type InlineProps,
+} from "@pixxl-tools/components";
 import messages from "../messages/en.json";
 import { useSitePreferences, type Theme } from "./SiteProviders";
 
-export default function NavControls() {
+type NavControlsProps = {
+  justify?: InlineProps["justify"];
+};
+
+export default function NavControls({ justify = "end" }: NavControlsProps) {
   const { setTheme, theme } = useSitePreferences();
   const themeTarget: Theme = theme === "dark" ? "light" : "dark";
   const label =
@@ -17,7 +27,7 @@ export default function NavControls() {
   };
 
   return (
-    <Inline gap="sm" justify="end" wrap={false}>
+    <Inline gap="sm" justify={justify} wrap={false}>
       <IconButton
         label={label}
         onClick={handleThemeToggle}

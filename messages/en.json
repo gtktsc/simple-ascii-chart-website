@@ -3,6 +3,8 @@
     "title": "simple-ascii-chart",
     "titleTemplate": "%s | simple-ascii-chart",
     "homeTitle": "simple-ascii-chart | Terminal-native TypeScript ASCII charts",
+    "applicationName": "simple-ascii-chart",
+    "manifestShortName": "ASCII Chart",
     "description": "Simple ASCII Chart is a TypeScript library and CLI for rendering customizable ASCII charts in terminals, logs, API responses, and documentation.",
     "authorName": "Bartosz Gryta",
     "authorUrl": "https://gtktsc.com",
@@ -61,6 +63,11 @@
         "label": "Source repository",
         "title": "CLI repo"
       }
+    },
+    "projectArticle": {
+      "title": "Project article",
+      "description": "Read the gtktsc.com write-up on the design choices behind simple-ascii-chart, from terminal defaults to API ergonomics:",
+      "link": "Designing simple-ascii-chart"
     },
     "support": {
       "title": "Support",

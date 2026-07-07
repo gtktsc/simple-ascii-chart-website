@@ -1,5 +1,7 @@
-import test from "node:test";
+import { test } from "vitest";
 import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
 import messages from "../messages/en.json" with { type: "json" };
 import { formatMessage } from "../lib/messages.mjs";
 
@@ -29,4 +31,27 @@ test("documentation preview snippet lives in locale messages", () => {
     }),
     "const input = [[1,1]];\nconst settings = { width: 30 };\n\nconsole.log(plot(input, settings));"
   );
+});
+
+test("formatMessage replaces missing values with empty strings", () => {
+  assert.equal(formatMessage("Hello {name} {missing}", { name: "Ada" }), "Hello Ada ");
+});
+
+test("manifest display names are locale-backed", () => {
+  const manifestSource = fs.readFileSync(
+    path.join(process.cwd(), "app/manifest.ts"),
+    "utf8"
+  );
+
+  assert.ok(
+    manifestSource.includes("messages.metadata.applicationName")
+  );
+  assert.ok(
+    manifestSource.includes("messages.metadata.manifestShortName")
+  );
+  assert.equal(
+    fs.existsSync(path.join(process.cwd(), "app/manifest.webmanifest")),
+    false
+  );
+  assert.equal(messages.metadata.manifestShortName, "ASCII Chart");
 });

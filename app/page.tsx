@@ -113,7 +113,7 @@ export default function Home() {
             <Stack gap="md">
               <Text>{messages.home.intro}</Text>
 
-              <MediaStage aspectRatio="16 / 9" fit="cover">
+              <MediaStage aspectRatio="16 / 9" fit="cover" style={{ minHeight: 0 }}>
                 <AboutDemoImage alt={messages.home.heroAlt} />
               </MediaStage>
 
@@ -154,6 +154,16 @@ export default function Home() {
                 />
               ))}
             </SimpleGrid>
+          </PageSection>
+
+          <PageSection title={messages.home.projectArticle.title}>
+            <Text>
+              {messages.home.projectArticle.description}{" "}
+              <PixxlLink href={EXTERNAL_LINKS.projectArticle}>
+                {messages.home.projectArticle.link}
+              </PixxlLink>
+              .
+            </Text>
           </PageSection>
 
           <PageSection title={messages.home.support.title}>

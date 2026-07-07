@@ -1,15 +1,17 @@
 import fs from "node:fs";
 import path from "node:path";
-import test from "node:test";
+import { test } from "vitest";
 import assert from "node:assert/strict";
 import messages from "../messages/en.json" with { type: "json" };
 import { createRequire } from "node:module";
 import {
   generateSettingsDocs,
   generateSettingsMessages,
+  mergeGeneratedSettingsMessages,
   parseExportedTypeDefinitions,
   parseSettingsDescriptions,
   parseSettingsTypeSignatures,
+  serializeMessages,
 } from "../lib/settingsDocsGenerator.mjs";
 
 const require = createRequire(import.meta.url);
@@ -25,6 +27,25 @@ const dtsContent = fs.readFileSync(
   "utf8"
 );
 
+function readmeWithRows(rows) {
+  return `# Test
+
+### Settings Reference
+
+| Option | Description |
+| --- | --- |
+${rows}
+### Next
+`;
+}
+
+function dtsWithSettings(settings, extra = "") {
+  return `export type Settings = {
+${settings}
+};
+${extra}`;
+}
+
 test("generateSettingsDocs includes every key from Settings type", () => {
   const signatures = parseSettingsTypeSignatures(dtsContent);
   const docs = generateSettingsDocs({ readmeContent, dtsContent });
@@ -33,6 +54,13 @@ test("generateSettingsDocs includes every key from Settings type", () => {
   const docKeys = docs.map(({ key }) => key).sort();
 
   assert.deepEqual(docKeys, signatureKeys);
+});
+
+test("generateSettingsDocs reads package defaults when no sources are provided", () => {
+  const docs = generateSettingsDocs();
+
+  assert.ok(docs.length > 0);
+  assert.equal(docs.some((doc) => doc.key === "width"), true);
 });
 
 test("generateSettingsDocs keeps locale copy out of generated machine data", () => {
@@ -49,6 +77,20 @@ test("parseExportedTypeDefinitions extracts custom type aliases", () => {
   assert.match(definitions.Legend, /position\?: 'left' \| 'right'/);
   assert.match(definitions.Legend, /series\?: string \| string\[\]/);
   assert.match(definitions.Threshold, /y\?: number/);
+});
+
+test("parseExportedTypeDefinitions handles incomplete and quoted aliases", () => {
+  const incompleteDefinitions = parseExportedTypeDefinitions(`export type Broken = {
+  value: "}";
+`);
+  const definitions = parseExportedTypeDefinitions(`export type Complete = {
+    tuple: [number, string];
+    label: "semi;colon";
+};
+`);
+
+  assert.match(incompleteDefinitions.Broken, /value/);
+  assert.match(definitions.Complete, /tuple: \[number, string\]/);
 });
 
 test("generateSettingsDocs includes custom type definitions for settings", () => {
@@ -123,6 +165,40 @@ test("generateSettingsDocs fails when README descriptions are missing", () => {
   );
 });
 
+test("generateSettingsDocs fails when Settings type is missing", () => {
+  assert.throws(
+    () => parseSettingsTypeSignatures("export type Other = {};"),
+    /Settings type definition/,
+  );
+});
+
+test("generateSettingsDocs fails when README settings reference is missing", () => {
+  assert.throws(
+    () => parseSettingsDescriptions("# Missing"),
+    /Settings Reference table/,
+  );
+});
+
+test("generateSettingsDocs fails when examples are missing", () => {
+  const customDts = dtsWithSettings("    imaginary?: number;\n");
+  const customReadme = readmeWithRows("| `imaginary` | Test option. |");
+
+  assert.throws(
+    () => generateSettingsDocs({ dtsContent: customDts, readmeContent: customReadme }),
+    /Missing generated examples/,
+  );
+});
+
+test("generateSettingsDocs fails when examples are extra", () => {
+  const customDts = dtsWithSettings("    color?: Colors;\n", "export type Colors = string;\n");
+  const customReadme = readmeWithRows("| `color` | Test color. |");
+
+  assert.throws(
+    () => generateSettingsDocs({ dtsContent: customDts, readmeContent: customReadme }),
+    /unknown Settings keys/,
+  );
+});
+
 test("parseSettingsDescriptions extracts known setting docs", () => {
   const descriptions = parseSettingsDescriptions(readmeContent);
 
@@ -133,5 +209,30 @@ test("parseSettingsDescriptions extracts known setting docs", () => {
   assert.equal(
     descriptions.customYAxisTicks,
     "Explicit Y tick values."
+  );
+});
+
+test("parseSettingsDescriptions skips malformed rows", () => {
+  const descriptions = parseSettingsDescriptions(
+    readmeWithRows("| `width` | Chart width. |\n| malformed |"),
+  );
+
+  assert.deepEqual(descriptions, { width: "Chart width." });
+});
+
+test("message serialization helpers preserve generated settings", () => {
+  const sourceMessages = { common: { copy: "Copy" } };
+  const settingsMessages = { width: { description: "Width.", title: "Width" } };
+
+  assert.deepEqual(
+    mergeGeneratedSettingsMessages(sourceMessages, settingsMessages),
+    {
+      common: { copy: "Copy" },
+      settings: settingsMessages,
+    },
+  );
+  assert.equal(
+    serializeMessages({ settings: settingsMessages }),
+    `${JSON.stringify({ settings: settingsMessages }, null, 2)}\n`,
   );
 });

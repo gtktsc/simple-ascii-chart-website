@@ -1,15 +1,15 @@
 import fs from "node:fs";
 import path from "node:path";
 import { createRequire } from "node:module";
-import test from "node:test";
+import { test } from "vitest";
 import assert from "node:assert/strict";
 import messages from "../messages/en.json" with { type: "json" };
 
 const require = createRequire(import.meta.url);
 const ts = require("typescript");
 
-const sourceRoots = ["app", "components", "lib", "scripts"];
-const sourceExtensions = new Set([".tsx", ".ts", ".mjs"]);
+const sourceRoots = ["app", "components", "hooks", "lib", "scripts"];
+const sourceExtensions = new Set([".tsx", ".ts", ".mjs", ".json", ".webmanifest"]);
 const skippedSegments = new Set(["generated"]);
 const technicalLiteralAllowlist = new Set([
   "use client",
@@ -31,6 +31,7 @@ const technicalLiteralPatterns = [
   /^[a-z][a-z0-9]*(?:\.[a-z][a-z0-9]*)+$/i,
   /^[a-z0-9-]+$/i,
   /^\[[a-z ]+\]$/i,
+  /^\([a-z-]+:\s*\d+px\)$/i,
 ];
 
 function readSourceFiles(root) {
@@ -92,6 +93,10 @@ function getScriptKind(filePath) {
   return ts.ScriptKind.JS;
 }
 
+function isStaticJsonLikeFile(filePath) {
+  return filePath.endsWith(".json") || filePath.endsWith(".webmanifest");
+}
+
 function hasAncestor(node, predicate) {
   let current = node.parent;
 
@@ -150,6 +155,12 @@ function isLikelyUserFacingLiteral(value) {
 }
 
 function collectStringLiterals(filePath) {
+  if (isStaticJsonLikeFile(filePath)) {
+    return collectValues(JSON.parse(fs.readFileSync(filePath, "utf8")))
+      .filter(isLikelyUserFacingLiteral)
+      .map((value) => `${filePath}: ${JSON.stringify(value.trim())}`);
+  }
+
   const content = fs.readFileSync(filePath, "utf8");
   const sourceFile = ts.createSourceFile(
     filePath,

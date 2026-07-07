@@ -1,5 +1,7 @@
 import type { Coordinates, Settings } from "simple-ascii-chart";
 
+const GTK_TSC_SITE_URL = "https://gtktsc" + ".com";
+
 export const SITE_ROUTES = {
   home: "/",
   usage: "/usage",
@@ -13,6 +15,7 @@ export const EXTERNAL_LINKS = {
   libraryRepository: "https://github.com/gtktsc/ascii-chart",
   cliPackage: "https://www.npmjs.com/package/simple-ascii-chart-cli",
   cliRepository: "https://github.com/gtktsc/simple-ascii-chart-cli",
+  projectArticle: `${GTK_TSC_SITE_URL}/en/blog/ascii-chart-design`,
   support: "https://buymeacoffee.com/gtktsc",
 } as const;
 
