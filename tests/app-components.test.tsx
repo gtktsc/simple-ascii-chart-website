@@ -51,6 +51,8 @@ import {
   toCanonicalAbsoluteUrl,
 } from "../lib/seoMetadata";
 import {
+  DEFAULT_PLAYGROUND_INPUT,
+  DEFAULT_PLAYGROUND_OPTIONS,
   EXTERNAL_LINKS,
   PACKAGE_NAME,
   SITE_ROUTES,
@@ -448,20 +450,13 @@ describe("playground components and hooks", () => {
     expect(result.current.options).toEqual(options);
   });
 
-  test("usePlaygroundState reports malformed URL values", () => {
-    const consoleError = vi.spyOn(console, "error").mockImplementation(() => undefined);
+  test("usePlaygroundState falls back on malformed URL values", () => {
     window.history.pushState({}, "", "/playground?input={bad&options={bad");
 
-    renderHook(() => usePlaygroundState());
+    const { result } = renderHook(() => usePlaygroundState());
 
-    expect(consoleError).toHaveBeenCalledWith(
-      messages.playground.errors.parseInputUrl,
-      expect.any(SyntaxError),
-    );
-    expect(consoleError).toHaveBeenCalledWith(
-      messages.playground.errors.parseOptionsUrl,
-      expect.any(SyntaxError),
-    );
+    expect(result.current.input).toEqual(DEFAULT_PLAYGROUND_INPUT);
+    expect(result.current.options).toEqual(DEFAULT_PLAYGROUND_OPTIONS);
   });
 
   test("useEditablePlot runs editor code, validation, and syntax errors", async () => {

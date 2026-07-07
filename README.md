@@ -96,12 +96,6 @@ When `simple-ascii-chart` changes:
 3. `yarn docs:check && yarn typecheck && yarn lint && yarn test && yarn build`
 4. Commit and push
 
-Existing helper script:
-
-```bash
-yarn deploy
-```
-
 ### License
 
 MIT

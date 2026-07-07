@@ -6,11 +6,7 @@ import SiteFooter from "../components/SiteFooter";
 import SiteNavbar from "../components/SiteNavbar";
 import { SiteProviders } from "../components/SiteProviders";
 import { buildPageMetadata } from "../lib/seoMetadata";
-import {
-  PACKAGE_NAME,
-  SITE_ROUTES,
-  SITE_URL,
-} from "../lib/siteConstants";
+import { SITE_ROUTES, SITE_URL } from "../lib/siteConstants";
 import messages from "../messages/en.json";
 
 export const metadata: Metadata = {

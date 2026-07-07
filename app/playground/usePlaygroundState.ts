@@ -10,7 +10,6 @@ import {
   parsePlaygroundInput,
   parsePlaygroundOptions,
 } from "../../lib/playgroundQuery.mjs";
-import messages from "../../messages/en.json";
 
 function getBrowserSearch() {
   return typeof window === "undefined" ? "" : window.location.search;
@@ -21,18 +20,12 @@ export function usePlaygroundState() {
     parsePlaygroundInput(
       getBrowserSearch(),
       DEFAULT_PLAYGROUND_INPUT,
-      (error: unknown) => {
-        console.error(messages.playground.errors.parseInputUrl, error);
-      },
     ),
   );
   const [options] = useState<Settings>(() =>
     parsePlaygroundOptions(
       getBrowserSearch(),
       DEFAULT_PLAYGROUND_OPTIONS,
-      (error: unknown) => {
-        console.error(messages.playground.errors.parseOptionsUrl, error);
-      },
     ),
   );
 

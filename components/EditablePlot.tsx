@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { Coordinates, Settings } from "simple-ascii-chart";
 import dynamic from "next/dynamic";
 

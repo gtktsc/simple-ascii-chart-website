@@ -166,11 +166,7 @@
   "playground": {
     "title": "Playground",
     "description": "Edit chart input and settings in the browser, then render simple-ascii-chart output instantly.",
-    "shortcutHint": "Use Cmd+S or Ctrl+S inside either editor to format and rerun the chart.",
-    "errors": {
-      "parseInputUrl": "Error parsing input URL parameter:",
-      "parseOptionsUrl": "Error parsing options URL parameter:"
-    }
+    "shortcutHint": "Use Cmd+S or Ctrl+S inside either editor to format and rerun the chart."
   },
   "theme": {
     "switchToDark": "Switch to dark mode",
@@ -207,15 +203,6 @@
       "MISSING_INPUT_BODY": "Missing required body field: input.",
       "INVALID_CHART_DATA": "Unable to render chart from the provided input/settings.",
       "CHART_ERROR_DETAILS": "{message}"
-    }
-  },
-  "media": {
-    "errors": {
-      "missingExecutable": "Missing executable. Set {envName} or install one of: {candidates}",
-      "commandFailed": "{command} failed with exit {status}"
-    },
-    "logs": {
-      "generatedGif": "Generated {path}"
     }
   },
   "generator": {

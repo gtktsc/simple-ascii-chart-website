@@ -16,29 +16,6 @@ export type GeneratedSettingDoc = {
   preview: string;
 };
 
-export const SETTINGS_PREVIEW_INPUT = [
-  [
-    1,
-    1
-  ],
-  [
-    2,
-    4
-  ],
-  [
-    3,
-    9
-  ],
-  [
-    4,
-    16
-  ],
-  [
-    5,
-    25
-  ]
-];
-
 export const SETTINGS_PREVIEW_INPUT_CODE = "[\n  [\n    1,\n    1\n  ],\n  [\n    2,\n    4\n  ],\n  [\n    3,\n    9\n  ],\n  [\n    4,\n    16\n  ],\n  [\n    5,\n    25\n  ]\n]";
 
 export const SETTINGS_DOCS: GeneratedSettingDoc[] = [
