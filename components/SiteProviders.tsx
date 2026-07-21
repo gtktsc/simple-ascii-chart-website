@@ -10,11 +10,14 @@ import {
 import { PIXEL_SITE_LOCALE } from "../lib/siteConstants";
 import messages from "../messages/en.json";
 import type { Theme } from "./siteThemeStore";
+import { usePersistentLibraryVersion } from "./usePersistentLibraryVersion";
 import { usePersistentTheme } from "./usePersistentTheme";
 
 export type { Theme } from "./siteThemeStore";
 
 type SitePreferences = {
+  libraryVersion: string;
+  setLibraryVersion: (version: string) => void;
   setTheme: (theme: Theme) => void;
   theme: Theme;
 };
@@ -26,14 +29,17 @@ type SiteProvidersProps = {
 const SitePreferencesContext = createContext<SitePreferences | null>(null);
 
 export function SiteProviders({ children }: SiteProvidersProps) {
+  const { libraryVersion, setLibraryVersion } = usePersistentLibraryVersion();
   const { setTheme, theme } = usePersistentTheme();
 
   const preferences = useMemo<SitePreferences>(
     () => ({
+      libraryVersion,
+      setLibraryVersion,
       setTheme,
       theme,
     }),
-    [setTheme, theme],
+    [libraryVersion, setLibraryVersion, setTheme, theme],
   );
 
   return (

@@ -1,31 +1,37 @@
-import type { FormatterHelpers, Settings } from "simple-ascii-chart";
+import {
+  candlestick,
+  heatmap,
+  histogram,
+  plot,
+  renderChart,
+  sparkline,
+  type FormatterHelpers,
+  type Settings,
+} from "simple-ascii-chart";
+import { toJavaScriptLiteral } from "../../lib/optionsSerialization.mjs";
 import messages from "../../messages/en.json";
+import {
+  CANDLESTICK_EXAMPLES,
+  HEATMAP_EXAMPLES,
+  RENDER_CHART_EXAMPLES,
+} from "./chartMethodExampleData";
+import {
+  HISTOGRAM_EXAMPLES,
+  SPARKLINE_EXAMPLES,
+} from "./helperExampleData";
+import { EXPANDED_CANDLESTICK_EXAMPLES } from "./expandedCandlestickExampleData";
+import { EXPANDED_HEATMAP_EXAMPLES } from "./expandedHeatmapExampleData";
+import { EXPANDED_SPARKLINE_EXAMPLES } from "./expandedSparklineExampleData";
+import type {
+  ExampleDefinition,
+  PlotExampleDefinition,
+} from "./exampleTypes";
 
-export type ExampleId =
-  | "basicWidthHeight"
-  | "logarithmicScale"
-  | "exponentialGrowth"
-  | "areaFill"
-  | "customThresholds"
-  | "withPoints"
-  | "customAxisCenter"
-  | "barChart"
-  | "horizontalBarChart"
-  | "titleAndLabels"
-  | "legend"
-  | "complexLegend"
-  | "singleSeriesBarChart"
-  | "negativeBarChart"
-  | "singleSeriesHorizontalBarChart"
-  | "customFormatter";
+export type { ExampleDefinition, ExampleId, ExampleMethod } from "./exampleTypes";
 
-export type ExampleDefinition = {
-  id: ExampleId;
-  input: unknown;
-  options: Settings;
-};
+type PlotExampleSeed = Omit<PlotExampleDefinition, "method">;
 
-export const EXAMPLE_DEFINITIONS = [
+const PLOT_EXAMPLE_DEFINITIONS = [
   {
     id: "basicWidthHeight",
     input: [
@@ -281,4 +287,63 @@ export const EXAMPLE_DEFINITIONS = [
         axis === "x" ? String.fromCharCode(65 + value) : value,
     } as Settings,
   },
+] satisfies readonly PlotExampleSeed[];
+
+export const EXAMPLE_DEFINITIONS = [
+  ...PLOT_EXAMPLE_DEFINITIONS.map((example) => ({
+    ...example,
+    method: "plot" as const,
+  })),
+  ...RENDER_CHART_EXAMPLES,
+  ...CANDLESTICK_EXAMPLES,
+  ...EXPANDED_CANDLESTICK_EXAMPLES,
+  ...HEATMAP_EXAMPLES,
+  ...EXPANDED_HEATMAP_EXAMPLES,
+  ...SPARKLINE_EXAMPLES,
+  ...EXPANDED_SPARKLINE_EXAMPLES,
+  ...HISTOGRAM_EXAMPLES,
 ] satisfies readonly ExampleDefinition[];
+
+const ANSI_COLOR_SEQUENCE = /\u001b\[[0-9;]*m/g;
+
+export function getExampleSource(example: ExampleDefinition) {
+  const args: unknown[] = [example.input];
+
+  if ("options" in example && example.options !== undefined) {
+    args.push(example.options);
+  }
+
+  return `${example.method}(${args.map((value) => toJavaScriptLiteral(value)).join(", ")});`;
+}
+
+export function renderExample(example: ExampleDefinition) {
+  let output: string;
+
+  switch (example.method) {
+    case "plot":
+      output = plot(example.input, example.options);
+      break;
+    case "renderChart":
+      output = renderChart(example.input);
+      break;
+    case "candlestick":
+      output = candlestick(example.input);
+      break;
+    case "heatmap":
+      output = heatmap(example.input);
+      break;
+    case "sparkline":
+      output = sparkline(example.input, example.options);
+      break;
+    case "histogram": {
+      const result =
+        example.inputKind === "bins"
+          ? histogram(example.input)
+          : histogram(example.input, example.options);
+      output = JSON.stringify(result, null, 2);
+      break;
+    }
+  }
+
+  return output.replace(ANSI_COLOR_SEQUENCE, "");
+}

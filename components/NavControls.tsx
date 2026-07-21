@@ -8,6 +8,7 @@ import {
   type InlineProps,
 } from "@pixxl-tools/components";
 import messages from "../messages/en.json";
+import LibraryVersionPicker from "./LibraryVersionPicker";
 import { useSitePreferences, type Theme } from "./SiteProviders";
 
 type NavControlsProps = {
@@ -28,6 +29,7 @@ export default function NavControls({ justify = "end" }: NavControlsProps) {
 
   return (
     <Inline gap="sm" justify={justify} wrap={false}>
+      <LibraryVersionPicker />
       <IconButton
         label={label}
         onClick={handleThemeToggle}

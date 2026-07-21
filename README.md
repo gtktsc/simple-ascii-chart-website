@@ -26,15 +26,17 @@ yarn build
 
 ### Documentation generation
 
-`/documentation` is generated from the installed `simple-ascii-chart` package metadata:
+`/documentation` and its task-first API pages are generated from the installed
+`simple-ascii-chart` package metadata:
 
-- `README.md` settings reference table
-- `dist/types/index.d.ts` `Settings` type
+- `dist/index.d.ts` public types and JSDoc
+- Curated examples executed against the installed package
+- Exhaustive documentation surfaces for every public function and renderer backend
 
 Commands:
 
 ```bash
-yarn docs:generate   # regenerate app/generated/settings-docs.ts
+yarn docs:generate   # regenerate app/generated/api-docs.ts
 yarn docs:check      # fail if generated docs are stale
 ```
 
@@ -61,8 +63,12 @@ Body:
 
 ```json
 {
-  "input": [[1,2],[2,3],[3,4]],
-  "settings": {"width": 50, "height": 10}
+  "input": [
+    [1, 2],
+    [2, 3],
+    [3, 4]
+  ],
+  "settings": { "width": 50, "height": 10 }
 }
 ```
 

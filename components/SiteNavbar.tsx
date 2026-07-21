@@ -18,9 +18,14 @@ import {
 } from "@pixxl-tools/components";
 import { useState, type ReactNode } from "react";
 import { MOBILE_NAV_QUERY, useMediaQuery } from "../hooks/useMediaQuery";
+import {
+  getLibraryVersionFromPathname,
+  routeForLibraryVersion,
+} from "../lib/documentationVersions.mjs";
 import { PACKAGE_NAME, SITE_ROUTES } from "../lib/siteConstants";
 import messages from "../messages/en.json";
 import NavControls from "./NavControls";
+import { useSitePreferences } from "./SiteProviders";
 
 type NavItem = {
   href: string;
@@ -64,6 +69,7 @@ const navItems: readonly NavItem[] = [
 
 export default function SiteNavbar() {
   const pathname = usePathname();
+  const { libraryVersion } = useSitePreferences();
   const isMobile = useMediaQuery(MOBILE_NAV_QUERY);
   const [menuState, setMenuState] = useState({
     isOpen: false,
@@ -74,6 +80,8 @@ export default function SiteNavbar() {
   const menuLabel = isMenuOpen
     ? messages.nav.closeMenuLabel
     : messages.nav.openMenuLabel;
+  const selectedVersion =
+    getLibraryVersionFromPathname(pathname) ?? libraryVersion;
 
   const renderLink = (item: NavItem) => {
     const selected = activeId === item.id;
@@ -81,7 +89,7 @@ export default function SiteNavbar() {
     return (
       <ActionLink
         aria-current={selected ? "page" : undefined}
-        href={item.href}
+        href={routeForLibraryVersion(item.href, selectedVersion)}
         key={item.id}
         onClick={
           isMobile

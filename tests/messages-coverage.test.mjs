@@ -127,6 +127,7 @@ function isNonMessageContext(node) {
 function looksLikeCode(value) {
   return (
     /[{};=<>]/.test(value) ||
+    /\w+\([^)]*\)\s*:\s*[A-Za-z]/.test(value) ||
     /\b(return|export|const|let|function|import|type)\b/.test(value) ||
     /=>/.test(value) ||
     /\/\*/.test(value)

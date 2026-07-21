@@ -6,6 +6,7 @@ type BasicProps = {
   actions?: React.ReactNode;
   as?: keyof React.JSX.IntrinsicElements;
   brand?: React.ReactNode;
+  breadcrumbs?: React.ReactNode;
   children?: React.ReactNode;
   description?: React.ReactNode;
   href?: string;
@@ -34,6 +35,7 @@ function createBox(defaultTag: keyof React.JSX.IntrinsicElements) {
     actions,
     as,
     brand,
+    breadcrumbs,
     children,
     description,
     title,
@@ -44,6 +46,7 @@ function createBox(defaultTag: keyof React.JSX.IntrinsicElements) {
     return (
       <Tag {...pickDomProps(props)}>
         {brand}
+        {breadcrumbs}
         {title ? <h2>{title}</h2> : null}
         {description ? <p>{description}</p> : null}
         {actions}
@@ -153,6 +156,39 @@ vi.mock("@pixxl-tools/components", () => {
     );
   }
 
+  function FormField({ children, description, label, labelFor }: BasicProps) {
+    return (
+      <div>
+        {label ? <label htmlFor={String(labelFor ?? "")}>{label}</label> : null}
+        {children}
+        {description ? <p>{description}</p> : null}
+      </div>
+    );
+  }
+
+  function Select({
+    onValueChange,
+    options = [],
+    value,
+    ...props
+  }: BasicProps & {
+    options?: Array<{ label: React.ReactNode; value: string }>;
+  }) {
+    return (
+      <select
+        onChange={(event) => onValueChange?.(event.currentTarget.value)}
+        value={value}
+        {...pickDomProps(props)}
+      >
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    );
+  }
+
   function AnchorNav({
     items = [],
     onValueChange,
@@ -180,6 +216,31 @@ vi.mock("@pixxl-tools/components", () => {
     );
   }
 
+  function Breadcrumbs({
+    items = [],
+    ...props
+  }: BasicProps & {
+    items?: Array<{ href?: string; label: React.ReactNode }>;
+  }) {
+    return (
+      <nav {...pickDomProps(props)}>
+        <ol>
+          {items.map((item, index) => (
+            <li key={`${String(item.label)}-${index}`}>
+              {item.href && index < items.length - 1 ? (
+                <a href={item.href}>{item.label}</a>
+              ) : (
+                <span aria-current={index === items.length - 1 ? "page" : undefined}>
+                  {item.label}
+                </span>
+              )}
+            </li>
+          ))}
+        </ol>
+      </nav>
+    );
+  }
+
   function PixxlProvider({ children, theme }: BasicProps) {
     return <div data-theme={String(theme ?? "")}>{children}</div>;
   }
@@ -192,6 +253,7 @@ vi.mock("@pixxl-tools/components", () => {
     AppShell,
     BookOpenIcon: Icon,
     Box,
+    Breadcrumbs,
     Button,
     Card,
     ChartLineIcon: Icon,
@@ -201,6 +263,7 @@ vi.mock("@pixxl-tools/components", () => {
     CodeFrame,
     CommandIcon: Icon,
     Container,
+    FormField,
     Heading,
     HomeIcon: Icon,
     IconButton,
@@ -218,6 +281,7 @@ vi.mock("@pixxl-tools/components", () => {
     Prose,
     PublicPage,
     Section,
+    Select,
     SimpleGrid,
     Stack,
     SunIcon: Icon,
@@ -234,7 +298,14 @@ vi.mock("next/image", () => ({
 }));
 
 vi.mock("next/navigation", () => ({
+  notFound: vi.fn(() => {
+    throw new Error("NEXT_NOT_FOUND");
+  }),
+  redirect: vi.fn((location: string) => {
+    throw new Error(`NEXT_REDIRECT:${location}`);
+  }),
   usePathname: () => window.location.pathname,
+  useRouter: () => ({ push: vi.fn() }),
 }));
 
 vi.mock("next/dynamic", () => ({
@@ -265,27 +336,32 @@ vi.mock("@monaco-editor/react", () => {
     onMount?: (editor: {
       addCommand: (shortcut: number, callback: () => void | Promise<void>) => void;
       getAction: () => { run: () => Promise<void> };
+      getDomNode: () => HTMLDivElement | null;
       getValue: () => string;
     }) => void;
   }) {
+    const editorRef = useRef<HTMLDivElement>(null);
     const valueRef = useRef(defaultValue);
 
     useEffect(() => {
       onMount?.({
         addCommand: vi.fn(),
         getAction: () => ({ run: vi.fn(async () => undefined) }),
+        getDomNode: () => editorRef.current,
         getValue: () => valueRef.current,
       });
     }, [onMount]);
 
     return (
-      <textarea
-        aria-label="Monaco editor"
-        defaultValue={defaultValue}
-        onChange={(event) => {
-          valueRef.current = event.target.value;
-        }}
-      />
+      <div ref={editorRef}>
+        <textarea
+          aria-label="Monaco editor"
+          defaultValue={defaultValue}
+          onChange={(event) => {
+            valueRef.current = event.target.value;
+          }}
+        />
+      </div>
     );
   }
 

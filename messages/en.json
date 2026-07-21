@@ -17,6 +17,7 @@
     "collapse": "Collapse",
     "input": "Input",
     "options": "Options",
+    "source": "Source",
     "output": "Output",
     "type": "Type"
   },
@@ -29,6 +30,10 @@
     "examples": "Examples",
     "documentation": "Documentation",
     "playground": "Playground"
+  },
+  "breadcrumbs": {
+    "home": "Home",
+    "label": "Breadcrumb"
   },
   "footer": {
     "credit": "Designed and built by Bartosz Gryta (gtktsc).",
@@ -117,7 +122,9 @@
   },
   "examples": {
     "title": "Examples",
-    "description": "Browse simple-ascii-chart examples with generated input, settings, terminal output, and playground links.",
+    "description": "Browse runnable examples for every simple-ascii-chart method with generated source, terminal output, and plot playground links.",
+    "versionTitle": "Examples for {version}",
+    "historicalDescription": "These inputs, settings, and terminal outputs are frozen from simple-ascii-chart {version}.",
     "openInPlayground": "Open in Playground",
     "notShareable": "Not shareable via URL: this example includes values that cannot be safely serialized to query parameters.",
     "items": {
@@ -136,7 +143,99 @@
       "singleSeriesBarChart": "Bar chart",
       "negativeBarChart": "Bar chart with negative values and axis center",
       "singleSeriesHorizontalBarChart": "Horizontal bar chart",
-      "customFormatter": "Custom Formatter"
+      "customFormatter": "Custom Formatter",
+      "structuredLine": "renderChart: Named line series",
+      "structuredCategories": "renderChart: Categorical X axis",
+      "structuredMixedSeries": "renderChart: Mixed bar and line series",
+      "structuredGroupedBars": "renderChart: Grouped bars with value labels",
+      "structuredStackedBars": "renderChart: Stacked bars",
+      "structuredSecondaryAxis": "renderChart: Secondary Y axis",
+      "structuredAnnotations": "renderChart: Annotations",
+      "structuredThresholdsPoints": "renderChart: Thresholds and points",
+      "structuredBraille": "renderChart: Braille renderer",
+      "structuredGradient": "renderChart: Gradient coloring",
+      "candlestickBasic": "candlestick: Basic OHLC chart",
+      "candlestickTitle": "candlestick: Title and dimensions",
+      "candlestickColors": "candlestick: Direction colors",
+      "candlestickSymbols": "candlestick: Custom body symbols",
+      "candlestickThresholds": "candlestick: Reference thresholds",
+      "candlestickAxes": "candlestick: Axis domains and labels",
+      "candlestickUnchanged": "candlestick: Unchanged-price style",
+      "candlestickCompact": "candlestick: Compact dimensions",
+      "candlestickWide": "candlestick: Wide dimensions",
+      "candlestickTall": "candlestick: Tall dimensions",
+      "candlestickRisingRun": "candlestick: Rising-price run",
+      "candlestickFallingRun": "candlestick: Falling-price run",
+      "candlestickMonochrome": "candlestick: Monochrome style",
+      "candlestickBrightColors": "candlestick: Bright direction colors",
+      "candlestickSharedSymbols": "candlestick: Shared symbol overrides",
+      "candlestickHiddenXAxis": "candlestick: Hidden X axis",
+      "candlestickHiddenYAxis": "candlestick: Hidden Y axis",
+      "candlestickHiddenXTicks": "candlestick: Hidden X-axis ticks",
+      "candlestickShownYLabels": "candlestick: Complete Y-axis labels",
+      "candlestickExactXTicks": "candlestick: Exact X-axis ticks",
+      "candlestickExactYTicks": "candlestick: Exact Y-axis ticks",
+      "candlestickColoredXAxis": "candlestick: Colored X axis",
+      "candlestickColoredYAxis": "candlestick: Colored Y axis",
+      "candlestickColoredThresholds": "candlestick: Colored support and resistance",
+      "candlestickNarrowRange": "candlestick: Narrow decimal range",
+      "heatmapStatus": "heatmap: Status matrix",
+      "heatmapLabels": "heatmap: Row and column labels",
+      "heatmapLegend": "heatmap: Colored legend",
+      "heatmapMissingValues": "heatmap: Missing values and custom gaps",
+      "heatmapNumericLevels": "heatmap: Numeric levels",
+      "heatmapThreshold": "heatmap: Numeric threshold",
+      "heatmapThresholdLegend": "heatmap: Threshold labels and legend",
+      "heatmapTitleOnly": "heatmap: Matrix title",
+      "heatmapColumnsOnly": "heatmap: Column labels",
+      "heatmapRowsOnly": "heatmap: Row labels",
+      "heatmapCustomCell": "heatmap: Default cell symbol",
+      "heatmapCustomEmpty": "heatmap: Custom empty symbol",
+      "heatmapTightGap": "heatmap: No cell gap",
+      "heatmapWideGap": "heatmap: Wide cell gap",
+      "heatmapCategoricalColors": "heatmap: Categorical colors",
+      "heatmapCategoricalLabels": "heatmap: Categorical legend labels",
+      "heatmapSingleRow": "heatmap: Single row",
+      "heatmapSingleColumn": "heatmap: Single column",
+      "heatmapBinaryLevels": "heatmap: Binary numeric levels",
+      "heatmapColoredNumericLevels": "heatmap: Colored numeric levels",
+      "heatmapThresholdSymbols": "heatmap: Threshold symbols",
+      "heatmapThresholdLabels": "heatmap: Threshold legend labels",
+      "heatmapThresholdNulls": "heatmap: Thresholds with null cells",
+      "heatmapThresholdGridLabels": "heatmap: Threshold grid labels",
+      "heatmapThresholdBoundary": "heatmap: Exact threshold boundary",
+      "sparklineBasic": "sparkline: Basic trend",
+      "sparklineNegative": "sparkline: Negative and positive values",
+      "sparklineConstant": "sparkline: Constant values",
+      "sparklineGaps": "sparkline: Null gaps",
+      "sparklineColor": "sparkline: Single color",
+      "sparklinePalette": "sparkline: Per-value colors",
+      "sparklineThreshold": "sparkline: Threshold colors",
+      "sparklineSymbols": "sparkline: Custom levels and empty symbol",
+      "sparklineAscending": "sparkline: Ascending values",
+      "sparklineDescending": "sparkline: Descending values",
+      "sparklineWave": "sparkline: Positive and negative wave",
+      "sparklineSpikes": "sparkline: Sparse spikes",
+      "sparklineFractions": "sparkline: Fractional values",
+      "sparklineLargeValues": "sparkline: Large values",
+      "sparklineTinyValues": "sparkline: Tiny decimal values",
+      "sparklineSingleValue": "sparkline: Single value",
+      "sparklineTwoValues": "sparkline: Two values",
+      "sparklineAlternatingGaps": "sparkline: Alternating null gaps",
+      "sparklineDashGaps": "sparkline: Dash gap symbol",
+      "sparklineAsciiLevels": "sparkline: ASCII levels",
+      "sparklineRed": "sparkline: Red trend",
+      "sparklineAlternatingPalette": "sparkline: Alternating color palette",
+      "sparklinePartialPalette": "sparkline: Partial color palette",
+      "sparklineZeroThreshold": "sparkline: Zero threshold",
+      "sparklineNegativeThreshold": "sparkline: Negative threshold",
+      "sparklineExactThreshold": "sparkline: Exact threshold boundary",
+      "histogramAutomaticBins": "histogram: Automatic bins",
+      "histogramThreeBins": "histogram: Three bins",
+      "histogramManyBins": "histogram: Six bins",
+      "histogramNegativeValues": "histogram: Negative values",
+      "histogramConstantValues": "histogram: Constant samples",
+      "histogramPrecounted": "histogram: Normalize pre-counted bins"
     },
     "sampleData": {
       "samplePlot": "Sample Plot",
@@ -149,24 +248,106 @@
       "shortSeriesTwo": "S2",
       "thresholdOne": "T1",
       "pointOne": "P1",
-      "pointTwo": "P2"
+      "pointTwo": "P2",
+      "requestVolume": "Request volume",
+      "dailyOhlc": "Daily OHLC",
+      "buildMatrix": "Build matrix",
+      "resourceHealth": "Resource health",
+      "ciStatus": "CI status",
+      "atOrAbove": "At or above"
     }
   },
   "documentation": {
     "title": "Documentation",
-    "description": "Read generated simple-ascii-chart configuration documentation from the installed package metadata.",
-    "introPrefix": "The options below are generated from the installed",
-    "introSuffix": "package metadata. This page updates through the docs generation pipeline to stay in parity with the library.",
-    "settingsIndex": "Settings index",
-    "settingKey": "Setting key",
-    "snippets": {
-      "previewSource": "const input = {input};\nconst settings = {settings};\n\nconsole.log(plot(input, settings));"
+    "description": "Learn every simple-ascii-chart function, renderer backend, option, callback, symbol, constant, and error contract.",
+    "intro": "Choose a public API for a focused guide, executable examples, terminal output, and a declaration-generated option reference.",
+    "browseTitle": "API guides",
+    "generatedNotice": "Signatures and option descriptions are generated from the installed simple-ascii-chart declarations. Examples execute against the same package during documentation generation.",
+    "historicalGeneratedNotice": "Signatures and option descriptions are generated from preserved 5.4.0 declarations. Examples and terminal output were captured from the published 5.4.0 runtime.",
+    "versionLabel": "Library version",
+    "latestVersionLabel": "{version} (latest)",
+    "versionTitle": "Documentation for {version}",
+    "surfaceVersionTitle": "{surface} — {version}",
+    "versions": {
+      "6.0.0": {
+        "description": "Complete documentation for the current 6.0.0 API."
+      },
+      "5.4.0": {
+        "description": "Historical documentation for the 5.4.0 plot API."
+      }
+    },
+    "surfaceIndex": "On this page",
+    "signature": "Signature",
+    "examples": "Executable examples",
+    "source": "Source",
+    "output": "Terminal output",
+    "options": "Options",
+    "publicExports": "Public exports",
+    "publicTypes": "Public types and closed variants",
+    "relatedExamples": "Related executable examples",
+    "required": "Required",
+    "optional": "Optional",
+    "exampleTitles": {
+      "plot-complete": "Numeric plot",
+      "structured-complete": "Structured chart",
+      "candlestick-complete": "OHLC candlestick",
+      "heatmap-levels": "Categorical heatmap",
+      "heatmap-threshold": "Threshold heatmap",
+      "sparkline-options": "Sparkline options",
+      "histogram-options": "Histogram bins",
+      "renderer-ascii": "ASCII backend",
+      "renderer-braille": "Braille backend",
+      "public-reference": "Constants and errors"
+    },
+    "surfaces": {
+      "plot": {
+        "title": "plot",
+        "description": "Render numeric line, point, vertical-bar, and horizontal-bar charts with a compact settings object."
+      },
+      "render-chart": {
+        "title": "renderChart",
+        "description": "Build structured charts with named series, native string or Date X values, mixed modes, annotations, and a secondary Y-axis."
+      },
+      "candlestick": {
+        "title": "candlestick",
+        "description": "Render validated financial OHLC data with direction-aware bodies, wicks, colors, symbols, axes, and thresholds."
+      },
+      "heatmap": {
+        "title": "heatmap",
+        "description": "Render categorical status matrices or threshold-colored numeric grids with labels and legends."
+      },
+      "sparkline": {
+        "title": "sparkline",
+        "description": "Render one compact Unicode trend glyph per value with gaps, colors, thresholds, and custom levels."
+      },
+      "histogram": {
+        "title": "histogram",
+        "description": "Bin raw samples or normalize pre-counted buckets into numeric data suitable for plot."
+      },
+      "renderers": {
+        "title": "ASCII and Braille backends",
+        "description": "Compare both plot-cell backends using identical data and terminal dimensions."
+      },
+      "reference": {
+        "title": "Shared API reference",
+        "description": "Inspect shared symbols, callback contexts, constants, defaults, and stable error contracts."
+      }
+    },
+    "historicalSurfaces": {
+      "reference": {
+        "title": "Shared API reference",
+        "description": "Inspect the constants, symbols, formatter contexts, and public types exported by version 5.4.0."
+      }
     }
   },
   "playground": {
     "title": "Playground",
+    "versionTitle": "Playground — {version}",
     "description": "Edit chart input and settings in the browser, then render simple-ascii-chart output instantly.",
-    "shortcutHint": "Use Cmd+S or Ctrl+S inside either editor to format and rerun the chart."
+    "shortcutHint": "Use Cmd+S or Ctrl+S inside either editor to format and rerun the chart.",
+    "errors": {
+      "unsupportedVersion": "Unsupported playground library version: {version}"
+    }
   },
   "theme": {
     "switchToDark": "Switch to dark mode",
@@ -206,132 +387,31 @@
     }
   },
   "generator": {
+    "exampleData": {
+      "nodeVersions": ["Node 22", "Node 24"]
+    },
     "errors": {
-      "missingSettingsType": "Unable to locate Settings type definition in d.ts",
-      "missingSettingsReference": "Unable to locate Settings Reference table in README",
-      "missingDescriptions": "Missing README descriptions for Settings keys: {keys}",
-      "missingExamples": "Missing generated examples for Settings keys: {keys}",
-      "extraExamples": "Examples defined for unknown Settings keys: {keys}",
+      "missingPackageRoot": "Unable to locate the simple-ascii-chart package root.",
+      "duplicateSurfaceId": "Duplicate API documentation surface ID.",
+      "duplicateExampleId": "Duplicate example ID in API documentation surface: {id}",
+      "duplicateAnchor": "Duplicate documentation anchor in API surface: {id}",
+      "incompleteSurfaces": "API documentation surfaces are incomplete: {ids}",
+      "missingPublicType": "Missing public type definition: {name}",
+      "missingPublicExport": "Missing public export declaration: {name}",
+      "missingExportDescription": "Missing description or signature for public export: {name}",
+      "missingTypeDescription": "Missing description for {name}",
+      "missingTypeOptions": "Missing options for {name}",
+      "missingOptionDescription": "Missing description for {path}",
+      "missingOptionExample": "Missing executable example coverage for {path}",
+      "unknownCoveragePath": "Unknown executable example coverage path: {path}",
+      "incompleteExample": "Incomplete executable example: {id}",
+      "missingSurfaceExamples": "Missing executable examples for {id}",
       "missingGeneratedDocs": "Missing generated docs file: {path}",
-      "staleGeneratedDocs": "Generated docs are out of date. Run: yarn docs:generate",
-      "missingMessages": "Missing messages file: {path}",
-      "staleMessages": "Generated settings messages are out of date. Run: yarn docs:generate"
+      "staleGeneratedDocs": "Generated docs are out of date. Run: yarn docs:generate"
     },
     "logs": {
       "docsCurrent": "Generated docs are up to date.",
-      "docsWritten": "Generated settings docs: {path}",
-      "messagesWritten": "Generated settings messages: {path}"
-    },
-    "settingExamples": {
-      "title": "Sample Plot Title",
-      "xLabel": "X Axis",
-      "yLabel": "Y Axis",
-      "legendSeriesOne": "Series 1",
-      "formatterLabels": [
-        "A",
-        "B",
-        "C",
-        "D",
-        "E"
-      ]
-    }
-  },
-  "settings": {
-    "color": {
-      "title": "Color",
-      "description": "`Color`, `Color[]`, or `ColorGetter` for series coloring."
-    },
-    "width": {
-      "title": "Width",
-      "description": "Plot width."
-    },
-    "height": {
-      "title": "Height",
-      "description": "Plot height."
-    },
-    "yRange": {
-      "title": "Y Range",
-      "description": "Y-axis range as `[min, max]`. Values outside this range are filtered before rendering."
-    },
-    "showTickLabel": {
-      "title": "Show Tick Label",
-      "description": "Show full tick labels on the Y-axis."
-    },
-    "hideXAxis": {
-      "title": "Hide X Axis",
-      "description": "Hide the X-axis line."
-    },
-    "hideXAxisTicks": {
-      "title": "Hide X Axis Ticks",
-      "description": "Hide X-axis tick markers and labels."
-    },
-    "hideYAxis": {
-      "title": "Hide Y Axis",
-      "description": "Hide the Y-axis line."
-    },
-    "hideYAxisTicks": {
-      "title": "Hide Y Axis Ticks",
-      "description": "Hide Y-axis tick markers and labels."
-    },
-    "customXAxisTicks": {
-      "title": "Custom X Axis Ticks",
-      "description": "Explicit X tick values."
-    },
-    "customYAxisTicks": {
-      "title": "Custom Y Axis Ticks",
-      "description": "Explicit Y tick values."
-    },
-    "title": {
-      "title": "Title",
-      "description": "Chart title shown above the plot."
-    },
-    "xLabel": {
-      "title": "X Label",
-      "description": "X-axis label."
-    },
-    "yLabel": {
-      "title": "Y Label",
-      "description": "Y-axis label."
-    },
-    "thresholds": {
-      "title": "Thresholds",
-      "description": "Threshold lines (`x` and/or `y`) with optional color."
-    },
-    "points": {
-      "title": "Points",
-      "description": "Overlay points with optional color."
-    },
-    "fillArea": {
-      "title": "Fill Area",
-      "description": "Fill area under lines using the `area` chart symbol."
-    },
-    "legend": {
-      "title": "Legend",
-      "description": "Legend config (`position`, `series`, `points`, `thresholds`)."
-    },
-    "axisCenter": {
-      "title": "Axis Center",
-      "description": "Axis center as `[x, y]`. Default axis origin is bottom-left."
-    },
-    "formatter": {
-      "title": "Formatter",
-      "description": "Axis label formatter: `(value, helpers) => string \\| number`."
-    },
-    "lineFormatter": {
-      "title": "Line Formatter",
-      "description": "Custom point renderer: `(args: LineFormatterArgs) => CustomSymbol \\| CustomSymbol[]`."
-    },
-    "symbols": {
-      "title": "Symbols",
-      "description": "Symbol overrides for `axis`, `chart`, `empty`, `background`, `border`, `thresholds`, `point`."
-    },
-    "mode": {
-      "title": "Mode",
-      "description": "Plot mode: `'line'`, `'point'`, `'bar'`, `'horizontalBar'`."
-    },
-    "debugMode": {
-      "title": "Debug Mode",
-      "description": "Enable debug logging for out-of-bounds draw attempts."
+      "docsWritten": "Generated API docs: {path}"
     }
   }
 }

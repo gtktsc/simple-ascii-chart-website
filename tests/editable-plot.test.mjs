@@ -1,11 +1,14 @@
 import { test } from "vitest";
 import assert from "node:assert/strict";
+import historicalChart from "simple-ascii-chart-5-4-0";
 import messages from "../messages/en.json" with { type: "json" };
 import {
   getEditablePlotExecutionError,
+  getEditablePlotRuntime,
   getEditablePlotValidationError,
   isEditablePlotPayload,
   renderEditableChart,
+  withBrowserTerminalFallback,
 } from "../lib/editablePlot.mjs";
 import { formatMessage } from "../lib/messages.mjs";
 
@@ -35,6 +38,67 @@ test("renderEditableChart returns chart output for valid input", () => {
   );
 
   assert.match(result, /[┤▲▶]/);
+});
+
+test("playground runtime matches the selected library version", () => {
+  const input = [
+    [1, 1],
+    [2, 3],
+  ];
+  const options = { height: 4, renderer: "braille", width: 12 };
+  const historicalOutput = getEditablePlotRuntime("5.4.0")(input, options);
+  const latestOutput = getEditablePlotRuntime("6.0.0")(input, options);
+
+  assert.equal(getEditablePlotRuntime("5.4.0"), historicalChart);
+  assert.doesNotMatch(historicalOutput, /[\u2800-\u28ff]/u);
+  assert.match(latestOutput, /[\u2800-\u28ff]/u);
+  assert.throws(
+    () => getEditablePlotRuntime("invalid"),
+    /Unsupported playground library version: invalid/,
+  );
+});
+
+test("browser terminal fallback supplies and restores process.stdout", () => {
+  const environment = {};
+  const output = withBrowserTerminalFallback(
+    () => String(environment.process.stdout.columns ?? 80),
+    [],
+    {},
+    environment,
+  );
+
+  assert.equal(output, "80");
+  assert.equal("process" in environment, false);
+
+  const processObject = {};
+  const existingEnvironment = { process: processObject };
+  withBrowserTerminalFallback(
+    () => String(existingEnvironment.process.stdout.columns ?? 80),
+    [],
+    {},
+    existingEnvironment,
+  );
+  assert.equal(existingEnvironment.process, processObject);
+  assert.equal("stdout" in processObject, false);
+
+  const descriptorProcess = {};
+  Object.defineProperty(descriptorProcess, "stdout", {
+    configurable: true,
+    value: undefined,
+    writable: false,
+  });
+  withBrowserTerminalFallback(
+    () => "restored",
+    [],
+    {},
+    { process: descriptorProcess },
+  );
+  assert.deepEqual(Object.getOwnPropertyDescriptor(descriptorProcess, "stdout"), {
+    configurable: true,
+    enumerable: false,
+    value: undefined,
+    writable: false,
+  });
 });
 
 test("editable plot validation accepts array/object payloads", () => {

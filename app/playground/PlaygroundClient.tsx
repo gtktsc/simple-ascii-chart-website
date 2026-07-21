@@ -7,16 +7,17 @@ import {
   Stack,
 } from "@pixxl-tools/components";
 import EditablePlot from "../../components/EditablePlot";
+import { formatMessage } from "../../lib/messages.mjs";
 import messages from "../../messages/en.json";
 import { usePlaygroundState } from "./usePlaygroundState";
 
-export default function PlaygroundClient() {
+export default function PlaygroundClient({ version }: { version: string }) {
   const { input, options } = usePlaygroundState();
 
   return (
     <PublicPage
       description={messages.playground.description}
-      title={messages.playground.title}
+      title={formatMessage(messages.playground.versionTitle, { version })}
     >
       <Stack gap="lg">
         <PageSection>
@@ -25,7 +26,7 @@ export default function PlaygroundClient() {
           </Prose>
         </PageSection>
         <PageSection>
-          <EditablePlot input={input} options={options} />
+          <EditablePlot input={input} options={options} version={version} />
         </PageSection>
       </Stack>
     </PublicPage>

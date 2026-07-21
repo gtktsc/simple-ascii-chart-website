@@ -23,14 +23,10 @@ test("home and usage snippets live in locale messages", () => {
   assert.match(messages.usage.snippets.apiResponse, /┏━━/);
 });
 
-test("documentation preview snippet lives in locale messages", () => {
-  assert.equal(
-    formatMessage(messages.documentation.snippets.previewSource, {
-      input: "[[1,1]]",
-      settings: "{ width: 30 }",
-    }),
-    "const input = [[1,1]];\nconst settings = { width: 30 };\n\nconsole.log(plot(input, settings));"
-  );
+test("documentation navigation copy lives in locale messages", () => {
+  assert.equal(messages.documentation.surfaces.plot.title, "plot");
+  assert.match(messages.documentation.surfaces["render-chart"].description, /structured charts/i);
+  assert.equal(messages.documentation.exampleTitles["renderer-braille"], "Braille backend");
 });
 
 test("formatMessage replaces missing values with empty strings", () => {

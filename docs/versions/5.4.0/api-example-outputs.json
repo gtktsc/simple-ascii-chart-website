@@ -1,0 +1,4 @@
+{
+  "plot-legacy-complete": "\nRequests                         \n  ▲                               \n 8┤                            ┏━ \n  │                            ┃  \nr │                            ┃  \ne │                            ┃  \nq5┤         ┏━━━━━━━━┓         ┃  \nu │         ┃        ┃         ┃  \ne │         ┃        ┃         ┃  \ns3┤         ┃        ┗━━━━━━━━━┛  \nt │         ┃                     \ns2┤━━━━━━━━━┛                     \n  └┬─────────┬────────┬─────────┬▶\n   0         1        2         3 \n               minute             \n",
+  "public-reference-legacy": "n, ns, y, nse, x, we, e, intersectionXY, intersectionX, intersectionY\n\nwe, wns, ns, nse, wsn, sne, area\n\n{\"MIN_PLOT_HEIGHT\":3,\"DEFAULT_DECIMAL_PLACES\":3,\"K_FORMAT_THRESHOLD\":1000,\"DEFAULT_PADDING\":2,\"DEFAULT_Y_SHIFT_OFFSET\":1}"
+}

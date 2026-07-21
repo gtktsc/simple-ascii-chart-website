@@ -4,8 +4,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { OnMount } from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
 import type { Coordinates, Settings } from "simple-ascii-chart";
+import { LATEST_DOCUMENTATION_VERSION } from "../lib/documentationVersions.mjs";
 import {
   getEditablePlotExecutionError,
+  getEditablePlotRuntime,
   getEditablePlotValidationError,
   isEditablePlotPayload,
   renderEditableChart,
@@ -16,19 +18,38 @@ type EditorHandle = Parameters<OnMount>[0];
 type UseEditablePlotOptions = {
   input: Coordinates;
   options: Settings;
+  version?: string;
 };
 
-export function useEditablePlot({ input, options }: UseEditablePlotOptions) {
+function identifyEditorInput(editor: EditorHandle, name: string) {
+  const textarea = editor.getDomNode()?.querySelector("textarea");
+
+  if (!textarea) {
+    return;
+  }
+
+  textarea.id = name;
+  textarea.name = name;
+}
+
+export function useEditablePlot({
+  input,
+  options,
+  version = LATEST_DOCUMENTATION_VERSION,
+}: UseEditablePlotOptions) {
   const inputEditorRef = useRef<EditorHandle | null>(null);
   const optionsEditorRef = useRef<EditorHandle | null>(null);
+  const initialInputRef = useRef(input);
+  const initialOptionsRef = useRef(options);
+  const plotRuntime = getEditablePlotRuntime(version);
 
   const [result, setResult] = useState(() =>
-    renderEditableChart(input, options),
+    renderEditableChart(input, options, plotRuntime),
   );
 
   const plot = useCallback((nextInput: Coordinates, nextOptions: Settings) => {
-    setResult(renderEditableChart(nextInput, nextOptions));
-  }, []);
+    setResult(renderEditableChart(nextInput, nextOptions, plotRuntime));
+  }, [plotRuntime]);
 
   const runCode = useCallback(() => {
     try {
@@ -74,6 +95,7 @@ export function useEditablePlot({ input, options }: UseEditablePlotOptions) {
   const mountInputEditor = useCallback(
     (editor: EditorHandle) => {
       inputEditorRef.current = editor;
+      identifyEditorInput(editor, "playground-input-code");
       handleSaveShortcut(editor);
     },
     [handleSaveShortcut],
@@ -82,6 +104,7 @@ export function useEditablePlot({ input, options }: UseEditablePlotOptions) {
   const mountOptionsEditor = useCallback(
     (editor: EditorHandle) => {
       optionsEditorRef.current = editor;
+      identifyEditorInput(editor, "playground-options-code");
       handleSaveShortcut(editor);
     },
     [handleSaveShortcut],
@@ -91,6 +114,16 @@ export function useEditablePlot({ input, options }: UseEditablePlotOptions) {
     void formatEditor(inputEditorRef.current);
     void formatEditor(optionsEditorRef.current);
   }, [formatEditor]);
+
+  useEffect(() => {
+    setResult(
+      renderEditableChart(
+        initialInputRef.current,
+        initialOptionsRef.current,
+        plotRuntime,
+      ),
+    );
+  }, [plotRuntime]);
 
   return {
     mountInputEditor,

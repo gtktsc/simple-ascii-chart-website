@@ -24,11 +24,16 @@ import { useEditablePlot } from "./useEditablePlot";
 type EditablePlotProps = {
   input: Coordinates;
   options: Settings;
+  version: string;
 };
 
-export default function EditablePlot({ input, options }: EditablePlotProps) {
+export default function EditablePlot({
+  input,
+  options,
+  version,
+}: EditablePlotProps) {
   const { mountInputEditor, mountOptionsEditor, result, runCode } =
-    useEditablePlot({ input, options });
+    useEditablePlot({ input, options, version });
 
   return (
     <Stack gap="lg">

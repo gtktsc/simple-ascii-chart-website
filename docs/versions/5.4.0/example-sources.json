@@ -1,0 +1,66 @@
+{
+  "basicWidthHeight": {
+    "input": "[\n  [\n    1,\n    2\n  ],\n  [\n    2,\n    4\n  ],\n  [\n    3,\n    6\n  ],\n  [\n    4,\n    8\n  ]\n]",
+    "options": "{\n  width: 30,\n  height: 15\n}"
+  },
+  "logarithmicScale": {
+    "input": "[\n  [\n    0,\n    0\n  ],\n  [\n    1,\n    0.6931471805599453\n  ],\n  [\n    2,\n    1.0986122886681096\n  ],\n  [\n    3,\n    1.3862943611198906\n  ],\n  [\n    4,\n    1.6094379124341003\n  ],\n  [\n    5,\n    1.791759469228055\n  ],\n  [\n    6,\n    1.9459101490553132\n  ],\n  [\n    7,\n    2.0794415416798357\n  ],\n  [\n    8,\n    2.1972245773362196\n  ],\n  [\n    9,\n    2.302585092994046\n  ],\n  [\n    10,\n    2.3978952727983707\n  ],\n  [\n    11,\n    2.4849066497880004\n  ],\n  [\n    12,\n    2.5649493574615367\n  ],\n  [\n    13,\n    2.639057329615259\n  ],\n  [\n    14,\n    2.70805020110221\n  ]\n]",
+    "options": "{\n  width: 35,\n  height: 15\n}"
+  },
+  "exponentialGrowth": {
+    "input": "[\n  [\n    0,\n    1\n  ],\n  [\n    1,\n    1.4142135623730951\n  ],\n  [\n    2,\n    2\n  ],\n  [\n    3,\n    2.82842712474619\n  ],\n  [\n    4,\n    4\n  ],\n  [\n    5,\n    5.65685424949238\n  ],\n  [\n    6,\n    8\n  ],\n  [\n    7,\n    11.31370849898476\n  ],\n  [\n    8,\n    16\n  ],\n  [\n    9,\n    22.62741699796952\n  ],\n  [\n    10,\n    32\n  ],\n  [\n    11,\n    45.25483399593904\n  ],\n  [\n    12,\n    64\n  ],\n  [\n    13,\n    90.50966799187808\n  ],\n  [\n    14,\n    128\n  ]\n]",
+    "options": "{\n  width: 35,\n  height: 15\n}"
+  },
+  "areaFill": {
+    "input": "[\n  [\n    0,\n    1\n  ],\n  [\n    1,\n    1.5\n  ],\n  [\n    2,\n    2\n  ],\n  [\n    3,\n    2.5\n  ],\n  [\n    4,\n    3\n  ],\n  [\n    5,\n    3.5\n  ]\n]",
+    "options": "{\n  width: 20,\n  height: 10,\n  fillArea: true\n}"
+  },
+  "customThresholds": {
+    "input": "[\n  [\n    1,\n    2\n  ],\n  [\n    2,\n    5\n  ],\n  [\n    3,\n    8\n  ],\n  [\n    4,\n    3\n  ],\n  [\n    5,\n    7\n  ],\n  [\n    6,\n    1\n  ]\n]",
+    "options": "{\n  width: 30,\n  height: 10,\n  thresholds: [\n    {\n      y: 5\n    },\n    {\n      x: 3\n    }\n  ]\n}"
+  },
+  "withPoints": {
+    "input": "[\n  [\n    1,\n    2\n  ],\n  [\n    2,\n    5\n  ],\n  [\n    3,\n    8\n  ],\n  [\n    4,\n    3\n  ],\n  [\n    5,\n    7\n  ],\n  [\n    6,\n    1\n  ]\n]",
+    "options": "{\n  width: 30,\n  height: 10,\n  points: [\n    {\n      y: 5,\n      x: 2\n    },\n    {\n      x: 3,\n      y: 2\n    }\n  ]\n}"
+  },
+  "customAxisCenter": {
+    "input": "[\n  [\n    -3,\n    -1\n  ],\n  [\n    -2,\n    0\n  ],\n  [\n    -1,\n    1\n  ],\n  [\n    0,\n    2\n  ],\n  [\n    1,\n    3\n  ],\n  [\n    2,\n    5\n  ],\n  [\n    3,\n    7\n  ]\n]",
+    "options": "{\n  width: 30,\n  height: 10,\n  axisCenter: [\n    0,\n    0\n  ]\n}"
+  },
+  "barChart": {
+    "input": "[\n  [\n    -3,\n    -1\n  ],\n  [\n    -2,\n    0\n  ],\n  [\n    -1,\n    1\n  ],\n  [\n    0,\n    2\n  ],\n  [\n    1,\n    3\n  ],\n  [\n    2,\n    5\n  ],\n  [\n    3,\n    -7\n  ]\n]",
+    "options": "{\n  mode: \"bar\",\n  width: 30,\n  height: 20,\n  axisCenter: [\n    0,\n    0\n  ]\n}"
+  },
+  "horizontalBarChart": {
+    "input": "[\n  [\n    -3,\n    -1\n  ],\n  [\n    -2,\n    0\n  ],\n  [\n    -1,\n    1\n  ],\n  [\n    0,\n    2\n  ],\n  [\n    1,\n    3\n  ],\n  [\n    2,\n    5\n  ]\n]",
+    "options": "{\n  mode: \"horizontalBar\",\n  width: 30,\n  height: 20,\n  axisCenter: [\n    0,\n    0\n  ]\n}"
+  },
+  "titleAndLabels": {
+    "input": "[\n  [\n    0,\n    1\n  ],\n  [\n    1,\n    2\n  ],\n  [\n    2,\n    4\n  ],\n  [\n    3,\n    9\n  ],\n  [\n    4,\n    16\n  ],\n  [\n    5,\n    25\n  ]\n]",
+    "options": "{\n  width: 30,\n  height: 10,\n  title: \"Sample Plot\",\n  xLabel: \"X-Axis\",\n  yLabel: \"Y-Axis\"\n}"
+  },
+  "legend": {
+    "input": "[\n  [\n    [\n      0,\n      1\n    ],\n    [\n      1,\n      2\n    ],\n    [\n      2,\n      4\n    ]\n  ],\n  [\n    [\n      0,\n      1\n    ],\n    [\n      1,\n      3\n    ],\n    [\n      2,\n      6\n    ]\n  ]\n]",
+    "options": "{\n  width: 30,\n  height: 10,\n  legend: {\n    position: \"bottom\",\n    series: [\n      \"Series 1\",\n      \"Series 2\"\n    ]\n  }\n}"
+  },
+  "complexLegend": {
+    "input": "[\n  [\n    [\n      0,\n      1\n    ],\n    [\n      1,\n      2\n    ],\n    [\n      2,\n      4\n    ]\n  ],\n  [\n    [\n      0,\n      1\n    ],\n    [\n      1,\n      3\n    ],\n    [\n      2,\n      6\n    ]\n  ]\n]",
+    "options": "{\n  title: \"Legend\",\n  width: 30,\n  points: [\n    {\n      x: 1,\n      y: 2\n    },\n    {\n      x: 2,\n      y: 4\n    }\n  ],\n  thresholds: [\n    {\n      x: 1,\n      y: 2\n    }\n  ],\n  height: 10,\n  legend: {\n    position: \"right\",\n    series: [\n      \"S1\",\n      \"S2\"\n    ],\n    thresholds: [\n      \"T1\"\n    ],\n    points: [\n      \"P1\",\n      \"P2\"\n    ]\n  }\n}"
+  },
+  "singleSeriesBarChart": {
+    "input": "[\n  [\n    [\n      0,\n      1\n    ],\n    [\n      1,\n      2\n    ],\n    [\n      2,\n      4\n    ]\n  ]\n]",
+    "options": "{\n  width: 30,\n  mode: \"bar\",\n  height: 10\n}"
+  },
+  "negativeBarChart": {
+    "input": "[\n  [\n    [\n      0,\n      1\n    ],\n    [\n      1,\n      2\n    ],\n    [\n      2,\n      4\n    ],\n    [\n      3,\n      -4\n    ],\n    [\n      4,\n      -2\n    ]\n  ]\n]",
+    "options": "{\n  width: 30,\n  mode: \"bar\",\n  height: 10,\n  axisCenter: [\n    0,\n    0\n  ]\n}"
+  },
+  "singleSeriesHorizontalBarChart": {
+    "input": "[\n  [\n    [\n      0,\n      1\n    ],\n    [\n      1,\n      2\n    ],\n    [\n      2,\n      4\n    ]\n  ]\n]",
+    "options": "{\n  width: 30,\n  mode: \"horizontalBar\",\n  height: 10\n}"
+  },
+  "customFormatter": {
+    "input": "[\n  [\n    0,\n    1\n  ],\n  [\n    1,\n    4\n  ],\n  [\n    2,\n    9\n  ],\n  [\n    3,\n    16\n  ],\n  [\n    4,\n    25\n  ]\n]",
+    "options": "{\n  width: 30,\n  height: 10,\n  formatter: (value, { axis }) => axis === \"x\" ? String.fromCharCode(65 + value) : value\n}"
+  }
+}

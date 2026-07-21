@@ -86,7 +86,7 @@ test("GET /api returns chart error details when plotting fails", async () => {
 
   await expectJsonError(response, 400, {
     code: "INVALID_CHART_DATA",
-    details: "input.flat is not a function",
+    details: "coordinates: must be an array",
     message: "Unable to render chart from the provided input/settings.",
   });
 });

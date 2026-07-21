@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import {
-  ActionLink,
   Card,
   Heading,
   Link as PixxlLink,
@@ -26,6 +25,7 @@ import {
 } from "../lib/structuredData";
 import messages from "../messages/en.json";
 import JsonLd from "../components/JsonLd";
+import VersionedPlaygroundLink from "../components/VersionedPlaygroundLink";
 
 export const metadata: Metadata = buildPageMetadata({
   description: messages.home.description,
@@ -101,9 +101,9 @@ export default function Home() {
       <JsonLd data={structuredData} />
       <PublicPage
         actions={
-          <ActionLink href={SITE_ROUTES.playground} tone="primary">
+          <VersionedPlaygroundLink tone="primary">
             {messages.home.primaryAction}
-          </ActionLink>
+          </VersionedPlaygroundLink>
         }
         description={messages.home.description}
         title={PACKAGE_NAME}

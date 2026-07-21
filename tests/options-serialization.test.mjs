@@ -60,11 +60,12 @@ test("buildPlaygroundHref returns URL for serializable payloads", () => {
       [1, 1],
       [2, 2],
     ],
-    { width: 20, height: 8 }
+    { width: 20, height: 8 },
+    "5.4.0",
   );
 
   assert.ok(href);
-  assert.match(href, /^\/playground\?/);
+  assert.match(href, /^\/playground\/5\.4\.0\?/);
   assert.match(href, /input=/);
   assert.match(href, /options=/);
 });

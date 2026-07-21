@@ -11,8 +11,15 @@ const DynamicComponentWithNoSSR = dynamic(
 type EditablePlotProps = {
   input: Coordinates;
   options: Settings;
+  version: string;
 };
 
-export default function EditablePlot({ input, options }: EditablePlotProps) {
-  return <DynamicComponentWithNoSSR input={input} options={options} />;
+export default function EditablePlot({ input, options, version }: EditablePlotProps) {
+  return (
+    <DynamicComponentWithNoSSR
+      input={input}
+      options={options}
+      version={version}
+    />
+  );
 }

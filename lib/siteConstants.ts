@@ -10,6 +10,22 @@ export const SITE_ROUTES = {
   playground: "/playground",
 } as const;
 
+export function documentationVersionRoute(version: string) {
+  return `${SITE_ROUTES.documentation}/${version}`;
+}
+
+export function documentationSurfaceRoute(version: string, surface: string) {
+  return `${documentationVersionRoute(version)}/${surface}`;
+}
+
+export function examplesVersionRoute(version: string) {
+  return `${SITE_ROUTES.examples}/${version}`;
+}
+
+export function playgroundVersionRoute(version: string) {
+  return `${SITE_ROUTES.playground}/${version}`;
+}
+
 export const EXTERNAL_LINKS = {
   libraryPackage: "https://www.npmjs.com/package/simple-ascii-chart",
   libraryRepository: "https://github.com/gtktsc/ascii-chart",
