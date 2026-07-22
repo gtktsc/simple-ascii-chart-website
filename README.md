@@ -24,6 +24,11 @@ yarn test
 yarn build
 ```
 
+### Community
+
+- [Contributing guide](./CONTRIBUTING.md)
+- [Code of Conduct](./CODE_OF_CONDUCT.md)
+
 ### Documentation generation
 
 `/documentation` and its task-first API pages are generated from the installed
